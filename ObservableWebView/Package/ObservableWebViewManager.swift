@@ -12,14 +12,14 @@ import Observation
 enum ObservableWebViewLoadState {
   case idle
   case isLoading
-  case finishedLoading
+  case isFinished
   case error(Error)
 }
 
 extension ObservableWebViewLoadState: Equatable {
   static func ==(lhs: ObservableWebViewLoadState, rhs: ObservableWebViewLoadState) -> Bool {
     switch (lhs, rhs) {
-    case (.idle, .idle), (.isLoading, .isLoading), (.finishedLoading, .finishedLoading):
+    case (.idle, .idle), (.isLoading, .isLoading), (.isFinished, .isFinished):
       return true
     case let (.error(lhsError), .error(rhsError)):
       return type(of: lhsError) == type(of: rhsError)
@@ -36,7 +36,7 @@ extension ObservableWebViewManager {
 }
 
 @Observable
-class ObservableWebViewManager: NSObject {
+class ObservableWebViewManager {
   private var webView: WKWebView = WKWebView()
   /// The current state of the WKWebView object.
   var loadState: ObservableWebViewLoadState = .idle
@@ -50,11 +50,10 @@ class ObservableWebViewManager: NSObject {
   init(urlString: String = Constants.aboutBlank) {
     self.webView = WKWebView()
     self.urlString = urlString
-    super.init()
     load(urlString)
   }
   
-  private func load(_ urlString: String) {
+  func load(_ urlString: String) {
     print("Loading URL:", urlString)
     let url = URL(string: urlString) ?? URL(string: Constants.aboutBlank)!
     let request = URLRequest(url: url)

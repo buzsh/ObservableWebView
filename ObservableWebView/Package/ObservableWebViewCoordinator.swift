@@ -23,7 +23,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   }
   
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    parent.manager.loadState = .finishedLoading
+    parent.manager.loadState = .isFinished
   }
   
   func webView(_ webView: WKWebView,

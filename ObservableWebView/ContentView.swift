@@ -22,7 +22,7 @@ struct ContentView: View {
           switch newState {
           case .isLoading:
             print("webView is loading")
-          case .finishedLoading:
+          case .isFinished:
             print("webView finished loading")
           case .error(let error):
             print("webView encountered an error: \(error.localizedDescription)")
@@ -33,10 +33,12 @@ struct ContentView: View {
       HStack {
         Spacer()
         Button("Load Wikipedia") {
-          webViewManager.urlString = "https://www.wikipedia.org"
+          //webViewManager.urlString = "https://www.wikipedia.org"
+          webViewManager.load("https://www.wikipedia.org")
         }
         Button("Load Apple") {
-          webViewManager.urlString = "https://apple.com"
+          //webViewManager.urlString = "https://apple.com"
+          webViewManager.load("https://www.wikipedia.org")
         }
       }
     }
