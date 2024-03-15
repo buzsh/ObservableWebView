@@ -38,7 +38,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
       guard let self = self else { return }
       
       if let newProgress = change.newValue {
-        let roundedProgress = round(newProgress * 100 * 100) / 100
+        let roundedProgress = (newProgress * 100).roundTo(decimalPlaces: 2) //round(newProgress * 100 * 100) / 100
         self.observableWebView.manager.progress = roundedProgress
       }
     }
@@ -46,5 +46,13 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   
   deinit {
     progressObservation?.invalidate()
+  }
+}
+
+extension Double {
+  /// Rounds the double to a specified number of decimal places.
+  func roundTo(decimalPlaces places: Int) -> Double {
+    let divisor = pow(10.0, Double(places))
+    return (self * divisor).rounded() / divisor
   }
 }
