@@ -65,17 +65,3 @@ class ObservableWebViewManager: NSObject {
     }
   }
 }
-
-extension ObservableWebViewManager: WKNavigationDelegate {
-  func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    loadState = .isLoading
-  }
-  
-  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    loadState = .finishedLoading
-  }
-  
-  func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-    loadState = .error(error)
-  }
-}
