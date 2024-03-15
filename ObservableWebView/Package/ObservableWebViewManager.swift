@@ -25,7 +25,7 @@ class ObservableWebViewManager {
       updateProgress(for: loadState)
     }
   }
-  var progress: Double = 0.0
+  var progress: Double = 0
   var urlString: String = ""
   
   init(urlString: String = Constants.aboutBlank) {
@@ -35,19 +35,11 @@ class ObservableWebViewManager {
   }
   
   func load(_ urlString: String) {
+    print("Attempting to load URL:", urlString)
     self.urlString = urlString
     let url = URL(string: urlString) ?? Constants.aboutBlankUrl
     let request = URLRequest(url: url)
     webView.load(request)
-  }
-  
-  func updateUrlString(withString string: String) {
-    self.urlString = string
-  }
-  
-  func updateUrlString(withUrl url: URL?) {
-    guard let url = url else { return }
-    updateUrlString(withString: url.absoluteString)
   }
   
   func getWebView() -> WKWebView {
@@ -62,5 +54,16 @@ class ObservableWebViewManager {
     case .isFinished:   progress = 100
     case .error(_):     progress = 0
     }
+  }
+}
+
+extension ObservableWebViewManager {
+  func updateUrlString(withString string: String) {
+    self.urlString = string
+  }
+  
+  func updateUrlString(withUrl url: URL?) {
+    guard let url = url else { return }
+    updateUrlString(withString: url.absoluteString)
   }
 }
