@@ -18,33 +18,41 @@ struct ContentView: View {
           print("onChange of url: \(webViewManager.urlString)")
         }
         .onChange(of: webViewManager.loadState) { oldState, newState in
-          print("from \(oldState) to \(newState)")
-          switch newState {
-          case .isLoading:
-            print("webView is loading")
-          case .isFinished:
-            print("webView finished loading")
-          case .error(let error):
-            print("webView encountered an error: \(error.localizedDescription)")
-          default:
-            break
-          }
+          loadStateChanged(from: oldState, to: newState)
+        }
+        .onChange(of: webViewManager.progress) {
+          print("Progress: \(webViewManager.progress)%")
         }
       HStack {
         Spacer()
         Button("Load Wikipedia") {
-          //webViewManager.urlString = "https://www.wikipedia.org"
           webViewManager.load("https://www.wikipedia.org")
         }
         Button("Load Apple") {
-          //webViewManager.urlString = "https://apple.com"
-          webViewManager.load("https://www.wikipedia.org")
+          webViewManager.load("https://apple.com")
         }
+        Spacer()
       }
+      .padding(.bottom, 8)
+    }
+  }
+  
+  func loadStateChanged(from oldState: ObservableWebViewLoadState, to newState: ObservableWebViewLoadState) {
+    print("from \(oldState) to \(newState)")
+    switch newState {
+    case .isLoading:
+      print("webView is loading")
+    case .isFinished:
+      print("webView finished loading")
+    case .error(let error):
+      print("webView encountered an error: \(error.localizedDescription)")
+    default:
+      break
     }
   }
 }
 
 #Preview {
   ContentView()
+    .frame(width: 400, height: 600)
 }
