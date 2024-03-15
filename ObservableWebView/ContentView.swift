@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State var webViewManager = WebViewManager()
+  @State var webViewManager = ObservableWebViewManager()
   
   var body: some View {
     VStack {

@@ -9,7 +9,7 @@ import SwiftUI
 import WebKit
 
 struct ObservableWebView {
-  var webViewManager: WebViewManager
+  var webViewManager: ObservableWebViewManager
   
   func makeCoordinator() -> Coordinator {
     Coordinator(self)
