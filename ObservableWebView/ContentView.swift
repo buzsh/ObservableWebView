@@ -17,7 +17,8 @@ struct ContentView: View {
         .onChange(of: webViewManager.urlString) {
           print("onChange of url: \(webViewManager.urlString)")
         }
-        .onChange(of: webViewManager.loadState) { newState, oldState in
+        .onChange(of: webViewManager.loadState) { oldState, newState in
+          print("from \(oldState) to \(newState)")
           switch newState {
           case .isLoading:
             print("webView is loading")

@@ -52,11 +52,11 @@ class ObservableWebViewManager: NSObject {
     self.urlString = urlString
     super.init()
     self.webView.navigationDelegate = self
-    observeUrlStringChange()
     load(urlString)
   }
   
   private func load(_ urlString: String) {
+    print("Loading URL:", urlString)
     let url = URL(string: urlString) ?? URL(string: Constants.aboutBlank)!
     let request = URLRequest(url: url)
     webView.load(request)
@@ -67,6 +67,7 @@ class ObservableWebViewManager: NSObject {
     return webView
   }
   
+  /*
   func observeUrlStringChange() {
     withObservationTracking {
       // Access urlString to ensure it is being tracked for changes.
@@ -78,4 +79,5 @@ class ObservableWebViewManager: NSObject {
       print("URLString changed to: \(self.urlString)")
     }
   }
+   */
 }
