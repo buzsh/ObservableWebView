@@ -11,8 +11,8 @@ import WebKit
 struct ObservableWebView: View {
   var manager: ObservableWebViewManager
   
-  func makeCoordinator() -> Coordinator {
-    Coordinator(self)
+  func makeCoordinator() -> ObservableWebViewCoordinator {
+    ObservableWebViewCoordinator(self)
   }
 }
 
@@ -37,28 +37,3 @@ extension ObservableWebView: UIViewRepresentable {
   func updateUIView(_ uiView: WKWebView, context: Context) {}
 }
 #endif
-
-class Coordinator: NSObject, WKNavigationDelegate {
-  var parent: ObservableWebView
-  
-  init(_ webView: ObservableWebView) {
-    self.parent = webView
-  }
-  
-  func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    parent.manager.loadState = .isLoading
-  }
-  
-  func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-    // webview is beginning to receive and display content
-  }
-  
-  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    parent.manager.loadState = .finishedLoading
-  }
-  
-  func webView(_ webView: WKWebView,
-               didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-    parent.manager.loadState = .error(error)
-  }
-}
