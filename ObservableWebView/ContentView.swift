@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
   
+  @State private var webContentThemeColor: Color = .clear
+  
   var body: some View {
     VStack {
       
@@ -33,11 +35,28 @@ struct ContentView: View {
         Button("Load Apple") {
           webViewManager.load("https://apple.com")
         }
+        Button("Theme Site") {
+          webViewManager.load("https://scinfu.github.io/SwiftSoup/")
+        }
         Spacer()
       }
       .padding(.bottom, 8)
-      
     }
+    .toolbar {
+      ToolbarItem(placement: .navigation, content: {
+        ToolbarSymbolButton(title: "Back", symbol: .back, action: {
+          webViewManager.webView.goBack()
+        })
+        .disabled(webViewManager.webView.canGoBack == false)
+      })
+      ToolbarItem(placement: .navigation, content: {
+        ToolbarSymbolButton(title: "Forward", symbol: .forward, action: {
+          webViewManager.webView.goForward()
+        })
+        .disabled(webViewManager.webView.canGoForward == false)
+      })
+    }
+    .toolbarBackground(webContentThemeColor, for: .windowToolbar)
   }
   
   func observedUrlChange() {
@@ -53,8 +72,10 @@ struct ContentView: View {
     switch newState {
     case .isLoading: 
       print("webView is loading")
-    case .isFinished: 
-      print("webView finished loading")
+      // quick fade-in progress bar
+    case .isFinished:
+      Task { await updateWebTheme() }
+      // stanadrd fade-out progress bar
     case .error(let error):
       print("webView encountered an error: \(error.localizedDescription)")
     default:
@@ -66,4 +87,26 @@ struct ContentView: View {
 #Preview {
   ContentView()
     .frame(width: 400, height: 600)
+}
+
+extension ContentView {
+  @MainActor
+  private func updateWebTheme() async {
+    let themeColorScript = "document.querySelector('meta[name=\\\"theme-color\\\"]').getAttribute('content');"
+    
+    do {
+      if let themeColorString = try await webViewManager.webView.evaluateJavaScript(themeColorScript) as? String,
+         let themeColor = PlatformColor(hex: themeColorString) {
+        updateWebContentThemeColor(to: Color(themeColor))
+      }
+    } catch {
+      updateWebContentThemeColor(to: .clear)
+    }
+  }
+  
+  func updateWebContentThemeColor(to color: Color) {
+    withAnimation {
+      webContentThemeColor = color
+    }
+  }
 }
