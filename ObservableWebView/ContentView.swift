@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+  @State var webViewManager = WebViewManager()
+  
   var body: some View {
     VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(.tint)
-      Text("Hello, world!")
+      ObservableWebView(webViewManager: webViewManager)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onChange(of: webViewManager.urlString) {
+          print("onChange of url: \(webViewManager.urlString)")
+        }
+      
+      Button("Load Another Page") {
+        webViewManager.urlString = "https://www.wikipedia.org"
+      }
     }
-    .padding()
   }
 }
 
