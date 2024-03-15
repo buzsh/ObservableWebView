@@ -18,11 +18,11 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    observableWebView.manager.loadState = .isPreparing
+    observableWebView.manager.loadState = .isLoading
   }
   
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-    observableWebView.manager.loadState = .isLoading
+    // webview is beginning to receive and display content
   }
   
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

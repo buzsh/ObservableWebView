@@ -13,7 +13,6 @@
 		29A079E02BA49C7A006B9A80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A079DF2BA49C7A006B9A80 /* Preview Assets.xcassets */; };
 		29C109822BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C109812BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift */; };
 		29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */; };
-		29C109882BA4DA6300F88BBD /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C109872BA4DA6300F88BBD /* Metal.framework */; };
 		29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */; };
 		29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */; };
 /* End PBXBuildFile section */
@@ -37,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29C109882BA4DA6300F88BBD /* Metal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

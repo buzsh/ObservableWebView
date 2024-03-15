@@ -20,11 +20,7 @@ extension ObservableWebViewManager {
 class ObservableWebViewManager {
   var webView: WKWebView = WKWebView()
   /// The current state of the WKWebView object.
-  var loadState: ObservableWebViewLoadState = .idle {
-    didSet {
-      updateProgress(for: loadState)
-    }
-  }
+  var loadState: ObservableWebViewLoadState = .idle
   var progress: Double = 0
   var urlString: String = ""
   
@@ -35,7 +31,6 @@ class ObservableWebViewManager {
   }
   
   func load(_ urlString: String) {
-    print("Attempting to load URL:", urlString)
     self.urlString = urlString
     let url = URL(string: urlString) ?? Constants.aboutBlankUrl
     let request = URLRequest(url: url)
@@ -44,16 +39,6 @@ class ObservableWebViewManager {
   
   func getWebView() -> WKWebView {
     return webView
-  }
-  
-  private func updateProgress(for state: ObservableWebViewLoadState) {
-    switch state {
-    case .idle:         progress = 0
-    case .isPreparing:  progress = 0
-    case .isLoading:    progress = 0
-    case .isFinished:   progress = 100
-    case .error(_):     progress = 0
-    }
   }
 }
 
