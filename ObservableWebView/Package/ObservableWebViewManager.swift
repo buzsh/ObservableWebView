@@ -12,20 +12,21 @@ import Observation
 extension ObservableWebViewManager {
   private struct Constants {
     static let aboutBlank = "about:blank"
+    static let aboutBlankUrl = URL(string: Constants.aboutBlank)!
   }
 }
 
 @Observable
 class ObservableWebViewManager {
-  private var webView: WKWebView = WKWebView()
+  var webView: WKWebView = WKWebView()
   /// The current state of the WKWebView object.
-  var loadState: ObservableWebViewLoadState = .idle
-  
-  var urlString: String {
+  var loadState: ObservableWebViewLoadState = .idle {
     didSet {
-      load(urlString)
+      updateProgress(for: loadState)
     }
   }
+  var progress: Double = 0.0
+  var urlString: String = ""
   
   init(urlString: String = Constants.aboutBlank) {
     self.webView = WKWebView()
@@ -35,7 +36,8 @@ class ObservableWebViewManager {
   
   func load(_ urlString: String) {
     print("Loading URL:", urlString)
-    let url = URL(string: urlString) ?? URL(string: Constants.aboutBlank)!
+    self.urlString = urlString
+    let url = URL(string: urlString) ?? Constants.aboutBlankUrl
     let request = URLRequest(url: url)
     webView.load(request)
     loadState = .isLoading
@@ -43,6 +45,15 @@ class ObservableWebViewManager {
   
   func getWebView() -> WKWebView {
     return webView
+  }
+  
+  private func updateProgress(for state: ObservableWebViewLoadState) {
+    switch state {
+    case .idle: progress = 0
+    case .isLoading: progress = 0
+    case .isFinished: progress = 100
+    case .error(_): progress = 0
+    }
   }
   
   /*

@@ -8,14 +8,17 @@
 import WebKit
 
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
-  var parent: ObservableWebView
+  var observableWebView: ObservableWebView
+  private var progressObservation: NSKeyValueObservation?
   
   init(_ webView: ObservableWebView) {
-    self.parent = webView
+    self.observableWebView = webView
+    super.init()
+    setupProgressObservation()
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    parent.manager.loadState = .isLoading
+    observableWebView.manager.loadState = .isLoading
   }
   
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -23,11 +26,25 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   }
   
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    parent.manager.loadState = .isFinished
+    observableWebView.manager.loadState = .isFinished
   }
   
-  func webView(_ webView: WKWebView,
-               didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-    parent.manager.loadState = .error(error)
+  func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    observableWebView.manager.loadState = .error(error)
+  }
+  
+  private func setupProgressObservation() {
+    progressObservation = observableWebView.manager.webView.observe(\.estimatedProgress, options: .new) { [weak self] webView, change in
+      guard let self = self else { return }
+      
+      if let newProgress = change.newValue {
+        let roundedProgress = round(newProgress * 100 * 100) / 100
+        self.observableWebView.manager.progress = roundedProgress
+      }
+    }
+  }
+  
+  deinit {
+    progressObservation?.invalidate()
   }
 }
