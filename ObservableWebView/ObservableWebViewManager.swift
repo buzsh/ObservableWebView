@@ -51,7 +51,6 @@ class ObservableWebViewManager: NSObject {
     self.webView = WKWebView()
     self.urlString = urlString
     super.init()
-    self.webView.navigationDelegate = self
     load(urlString)
   }
   
