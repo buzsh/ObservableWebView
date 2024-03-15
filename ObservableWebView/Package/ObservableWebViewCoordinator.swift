@@ -18,15 +18,16 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    observableWebView.manager.loadState = .isLoading
+    observableWebView.manager.loadState = .isPreparing
   }
   
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-    // webview is beginning to receive and display content
+    observableWebView.manager.loadState = .isLoading
   }
   
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     observableWebView.manager.loadState = .isFinished
+    observableWebView.manager.updateUrlString(withUrl: webView.url)
   }
   
   func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -38,7 +39,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
       guard let self = self else { return }
       
       if let newProgress = change.newValue {
-        let roundedProgress = (newProgress * 100).roundTo(decimalPlaces: 2) //round(newProgress * 100 * 100) / 100
+        let roundedProgress = (newProgress * 100).roundTo(decimalPlaces: 2)
         self.observableWebView.manager.progress = roundedProgress
       }
     }

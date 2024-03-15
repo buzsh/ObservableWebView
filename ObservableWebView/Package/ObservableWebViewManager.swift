@@ -35,12 +35,19 @@ class ObservableWebViewManager {
   }
   
   func load(_ urlString: String) {
-    print("Loading URL:", urlString)
     self.urlString = urlString
     let url = URL(string: urlString) ?? Constants.aboutBlankUrl
     let request = URLRequest(url: url)
     webView.load(request)
-    loadState = .isLoading
+  }
+  
+  func updateUrlString(withString string: String) {
+    self.urlString = string
+  }
+  
+  func updateUrlString(withUrl url: URL?) {
+    guard let url = url else { return }
+    updateUrlString(withString: url.absoluteString)
   }
   
   func getWebView() -> WKWebView {
@@ -49,24 +56,11 @@ class ObservableWebViewManager {
   
   private func updateProgress(for state: ObservableWebViewLoadState) {
     switch state {
-    case .idle: progress = 0
-    case .isLoading: progress = 0
-    case .isFinished: progress = 100
-    case .error(_): progress = 0
+    case .idle:         progress = 0
+    case .isPreparing:  progress = 0
+    case .isLoading:    progress = 0
+    case .isFinished:   progress = 100
+    case .error(_):     progress = 0
     }
   }
-  
-  /*
-  func observeUrlStringChange() {
-    withObservationTracking {
-      // Access urlString to ensure it is being tracked for changes.
-      _ = self.urlString
-    } onChange: {
-      // This is where you handle what happens when urlString changes.
-      // For instance, reloading the webView with the new URL.
-      self.load(self.urlString)
-      print("URLString changed to: \(self.urlString)")
-    }
-  }
-   */
 }
