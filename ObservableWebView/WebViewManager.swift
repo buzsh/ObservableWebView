@@ -23,7 +23,7 @@ enum WebViewLoadState {
 }
 
 @Observable
-class WebViewManager: NSObject, WKNavigationDelegate {
+class WebViewManager: NSObject {
   private var webView: WKWebView = WKWebView()
   /// The current state of the WKWebView object.
   var loadState: WebViewLoadState = .idle
@@ -64,7 +64,9 @@ class WebViewManager: NSObject, WKNavigationDelegate {
       print("URLString changed to: \(self.urlString)")
     }
   }
-  
+}
+
+extension WebViewManager: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     loadState = .isLoading
   }
