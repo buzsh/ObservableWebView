@@ -9,17 +9,30 @@ import SwiftUI
 import WebKit
 import Observation
 
-extension ObservableWebViewManager {
-  private struct Constants {
-    static let aboutBlank = "about:blank"
-  }
-}
-
 enum ObservableWebViewLoadState {
   case idle
   case isLoading
   case finishedLoading
   case error(Error)
+}
+
+extension ObservableWebViewLoadState: Equatable {
+  static func ==(lhs: ObservableWebViewLoadState, rhs: ObservableWebViewLoadState) -> Bool {
+    switch (lhs, rhs) {
+    case (.idle, .idle), (.isLoading, .isLoading), (.finishedLoading, .finishedLoading):
+      return true
+    case let (.error(lhsError), .error(rhsError)):
+      return type(of: lhsError) == type(of: rhsError)
+    default:
+      return false
+    }
+  }
+}
+
+extension ObservableWebViewManager {
+  private struct Constants {
+    static let aboutBlank = "about:blank"
+  }
 }
 
 @Observable
@@ -39,6 +52,7 @@ class ObservableWebViewManager: NSObject {
     self.urlString = urlString
     super.init()
     self.webView.navigationDelegate = self
+    observeUrlStringChange()
     load(urlString)
   }
   
@@ -53,7 +67,7 @@ class ObservableWebViewManager: NSObject {
     return webView
   }
   
-  func observeURLStringChange() {
+  func observeUrlStringChange() {
     withObservationTracking {
       // Access urlString to ensure it is being tracked for changes.
       _ = self.urlString
