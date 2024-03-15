@@ -9,26 +9,6 @@ import SwiftUI
 import WebKit
 import Observation
 
-enum ObservableWebViewLoadState {
-  case idle
-  case isLoading
-  case isFinished
-  case error(Error)
-}
-
-extension ObservableWebViewLoadState: Equatable {
-  static func ==(lhs: ObservableWebViewLoadState, rhs: ObservableWebViewLoadState) -> Bool {
-    switch (lhs, rhs) {
-    case (.idle, .idle), (.isLoading, .isLoading), (.isFinished, .isFinished):
-      return true
-    case let (.error(lhsError), .error(rhsError)):
-      return type(of: lhsError) == type(of: rhsError)
-    default:
-      return false
-    }
-  }
-}
-
 extension ObservableWebViewManager {
   private struct Constants {
     static let aboutBlank = "about:blank"
