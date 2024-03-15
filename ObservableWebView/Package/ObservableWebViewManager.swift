@@ -31,7 +31,7 @@ class ObservableWebViewManager {
   }
   
   func load(_ urlString: String) {
-    self.urlString = urlString
+    updateUrlString(withString: urlString)
     let url = URL(string: urlString) ?? Constants.aboutBlankUrl
     let request = URLRequest(url: url)
     webView.load(request)
