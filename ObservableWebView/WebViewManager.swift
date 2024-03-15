@@ -23,7 +23,7 @@ enum WebViewLoadState {
 }
 
 @Observable
-class WebViewManager {
+class WebViewManager: NSObject, WKNavigationDelegate {
   private var webView: WKWebView = WKWebView()
   /// The current state of the WKWebView object.
   var loadState: WebViewLoadState = .idle
@@ -35,16 +35,18 @@ class WebViewManager {
   }
   
   init(urlString: String = Constants.aboutBlank) {
+    self.webView = WKWebView()
     self.urlString = urlString
+    super.init()
+    self.webView.navigationDelegate = self
     load(urlString)
-    observeURLStringChange()
   }
   
   private func load(_ urlString: String) {
-    //guard let url = URL(string: urlString) else { return }
     let url = URL(string: urlString) ?? URL(string: Constants.aboutBlank)!
     let request = URLRequest(url: url)
     webView.load(request)
+    loadState = .isLoading
   }
   
   func getWebView() -> WKWebView {
@@ -61,5 +63,17 @@ class WebViewManager {
       self.load(self.urlString)
       print("URLString changed to: \(self.urlString)")
     }
+  }
+  
+  func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    loadState = .isLoading
+  }
+  
+  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    loadState = .finishedLoading
+  }
+  
+  func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    loadState = .error(error)
   }
 }
