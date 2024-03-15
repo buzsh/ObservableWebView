@@ -24,6 +24,22 @@ class ObservableWebViewManager {
   var progress: Double = 0
   var urlString: String = ""
   
+  var canGoBack: Bool {
+    webView.canGoBack
+  }
+  
+  var canGoForward: Bool {
+    webView.canGoForward
+  }
+  
+  func goBack() {
+    webView.goBack()
+  }
+  
+  func goForward() {
+    webView.goForward()
+  }
+  
   init(urlString: String = Constants.aboutBlank) {
     self.webView = WKWebView()
     self.urlString = urlString

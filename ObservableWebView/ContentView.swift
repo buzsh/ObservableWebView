@@ -43,20 +43,13 @@ struct ContentView: View {
       .padding(.bottom, 8)
     }
     .toolbar {
-      ToolbarItem(placement: .navigation, content: {
-        ToolbarSymbolButton(title: "Back", symbol: .back, action: {
-          webViewManager.webView.goBack()
-        })
-        .disabled(webViewManager.webView.canGoBack == false)
-      })
-      ToolbarItem(placement: .navigation, content: {
-        ToolbarSymbolButton(title: "Forward", symbol: .forward, action: {
-          webViewManager.webView.goForward()
-        })
-        .disabled(webViewManager.webView.canGoForward == false)
-      })
+      // Does work
+      NavigationToolbarContent(manager: webViewManager, canGoBack: webViewManager.canGoBack, canGoForward: webViewManager.canGoForward)
+      // Doesn't work
+      TestNavigationToolbarContent(manager: webViewManager)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
+    .navigationTitle("")
   }
   
   func observedUrlChange() {
@@ -80,6 +73,79 @@ struct ContentView: View {
       print("webView encountered an error: \(error.localizedDescription)")
     default:
       break
+    }
+  }
+  
+  @State private var toolbarStringText = ""
+  
+  private var browserToolbar: some ToolbarContent {
+    ToolbarItemGroup(placement: .navigation, content: {
+      ToolbarSymbolButton(title: "Back", symbol: .back, action: {
+        webViewManager.goBack()
+      })
+      .disabled(webViewManager.canGoBack == false)
+      
+      ToolbarSymbolButton(title: "Forward", symbol: .forward, action: {
+        webViewManager.webView.goForward()
+      })
+      .disabled(webViewManager.webView.canGoForward == false)
+      
+      TextField("Search or type URL", text: $toolbarStringText, onCommit: {
+        webViewManager.load(toolbarStringText)
+      })
+      .textFieldStyle(RoundedBorderTextFieldStyle())
+      .frame(minWidth: 150, maxWidth: 1000)
+      .onChange(of: webViewManager.urlString) {
+        toolbarStringText = webViewManager.urlString
+      }
+      
+    })
+  }
+}
+
+import SwiftUI
+
+struct NavigationToolbarContent: ToolbarContent {
+  let manager: ObservableWebViewManager
+  let canGoBack: Bool
+  let canGoForward: Bool
+  
+  var body: some ToolbarContent {
+    ToolbarItemGroup(placement: .automatic) {
+      ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
+        .disabled(canGoBack == false)
+      ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
+        .disabled(canGoForward == false)
+    }
+  }
+}
+
+struct TestNavigationToolbarContent: ToolbarContent {
+  let manager: ObservableWebViewManager
+  @State private var canGoBack = false
+  @State private var canGoForward = false
+  
+  init(manager: ObservableWebViewManager) {
+    self.manager = manager
+    
+    observeBackState()
+  }
+  
+  func observeBackState() {
+    withObservationTracking {
+      print("canGoBack: \(manager.webView.canGoBack)")
+      canGoBack = manager.webView.canGoBack
+    } onChange: {
+      Task { observeBackState() }
+    }
+  }
+  
+  var body: some ToolbarContent {
+    ToolbarItemGroup(placement: .automatic) {
+      ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
+        .disabled(manager.webView.canGoBack == false)
+      ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
+        .disabled(canGoForward == false)
     }
   }
 }
