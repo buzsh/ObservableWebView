@@ -1,5 +1,5 @@
 //
-//  WebViewManager.swift
+//  ObservableWebViewManager.swift
 //  ObservableWebView
 //
 //  Created by Justin Bush on 3/15/24.
@@ -9,13 +9,13 @@ import SwiftUI
 import WebKit
 import Observation
 
-extension WebViewManager {
+extension ObservableWebViewManager {
   private struct Constants {
     static let aboutBlank = "about:blank"
   }
 }
 
-enum WebViewLoadState {
+enum ObservableWebViewLoadState {
   case idle
   case isLoading
   case finishedLoading
@@ -23,10 +23,10 @@ enum WebViewLoadState {
 }
 
 @Observable
-class WebViewManager: NSObject {
+class ObservableWebViewManager: NSObject {
   private var webView: WKWebView = WKWebView()
   /// The current state of the WKWebView object.
-  var loadState: WebViewLoadState = .idle
+  var loadState: ObservableWebViewLoadState = .idle
   
   var urlString: String {
     didSet {
@@ -66,7 +66,7 @@ class WebViewManager: NSObject {
   }
 }
 
-extension WebViewManager: WKNavigationDelegate {
+extension ObservableWebViewManager: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     loadState = .isLoading
   }
