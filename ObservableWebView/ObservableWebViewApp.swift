@@ -12,6 +12,11 @@ struct ObservableWebViewApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
+        .environment(WindowProperties())
+    }
+    .windowToolbarStyle(.unified(showsTitle: false))
+    .commands {
+      ToolbarCommands()
     }
   }
 }

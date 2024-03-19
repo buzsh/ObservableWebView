@@ -10,11 +10,14 @@ import WebKit
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var observableWebView: ObservableWebView
   private var progressObservation: NSKeyValueObservation?
+  private var canGoBackObservation: NSKeyValueObservation?
+  private var canGoForwardObservation: NSKeyValueObservation?
   
   init(_ webView: ObservableWebView) {
     self.observableWebView = webView
     super.init()
     setupProgressObservation()
+    setupCanGoBackAndForwardObservation()
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -45,8 +48,20 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
     }
   }
   
+  private func setupCanGoBackAndForwardObservation() {
+    canGoBackObservation = observableWebView.manager.webView.observe(\.canGoBack, options: .new) { [weak self] webView, _ in
+      self?.observableWebView.manager.canGoBack = webView.canGoBack
+    }
+    
+    canGoForwardObservation = observableWebView.manager.webView.observe(\.canGoForward, options: .new) { [weak self] webView, _ in
+      self?.observableWebView.manager.canGoForward = webView.canGoForward
+    }
+  }
+  
   deinit {
     progressObservation?.invalidate()
+    canGoBackObservation?.invalidate()
+    canGoForwardObservation?.invalidate()
   }
 }
 
