@@ -17,6 +17,9 @@
 		29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1098D2BA4E89B00F88BBD /* SFSymbol.swift */; };
 		29C109912BA4E8CB00F88BBD /* SymbolButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C109902BA4E8CB00F88BBD /* SymbolButtons.swift */; };
 		29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */; };
+		29CF6F622BAA13E800C4E482 /* UrlSearchBarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */; };
+		29CF6F642BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */; };
+		29CF6F662BAA156800C4E482 /* WindowProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F652BAA156800C4E482 /* WindowProperties.swift */; };
 		29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */; };
 		29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */; };
 /* End PBXBuildFile section */
@@ -35,6 +38,9 @@
 		29C1098D2BA4E89B00F88BBD /* SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbol.swift; sourceTree = "<group>"; };
 		29C109902BA4E8CB00F88BBD /* SymbolButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolButtons.swift; sourceTree = "<group>"; };
 		29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableBrowserToolbar.swift; sourceTree = "<group>"; };
+		29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSearchBarTextField.swift; sourceTree = "<group>"; };
+		29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableToolbarIdentifiers.swift; sourceTree = "<group>"; };
+		29CF6F652BAA156800C4E482 /* WindowProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowProperties.swift; sourceTree = "<group>"; };
 		29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewManager.swift; sourceTree = "<group>"; };
 		29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,8 +77,9 @@
 			isa = PBXGroup;
 			children = (
 				29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */,
+				29CF6F652BAA156800C4E482 /* WindowProperties.swift */,
 				29A079DA2BA49C79006B9A80 /* ContentView.swift */,
-				29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */,
+				29CF6F602BAA13BE00C4E482 /* Toolbar */,
 				29C109892BA4E4A600F88BBD /* Plugins */,
 				29C109832BA4C45500F88BBD /* Package */,
 				29A079DC2BA49C7A006B9A80 /* Assets.xcassets */,
@@ -133,6 +140,16 @@
 				29C1098A2BA4E4BA00F88BBD /* PlatformColor.swift */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		29CF6F602BAA13BE00C4E482 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */,
+				29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */,
+				29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */,
+			);
+			path = Toolbar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,15 +222,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29CF6F642BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift in Sources */,
 				29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */,
 				29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */,
 				29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */,
+				29CF6F662BAA156800C4E482 /* WindowProperties.swift in Sources */,
 				29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */,
 				29C109822BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift in Sources */,
 				29A079DB2BA49C79006B9A80 /* ContentView.swift in Sources */,
 				29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */,
 				29C1098B2BA4E4BA00F88BBD /* PlatformColor.swift in Sources */,
 				29C109912BA4E8CB00F88BBD /* SymbolButtons.swift in Sources */,
+				29CF6F622BAA13E800C4E482 /* UrlSearchBarTextField.swift in Sources */,
 				29A079D92BA49C79006B9A80 /* ObservableWebViewApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

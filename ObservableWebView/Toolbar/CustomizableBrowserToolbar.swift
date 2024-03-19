@@ -7,20 +7,8 @@
 
 import SwiftUI
 
-enum CustomizableToolbar: String {
-  case editingtools
-  
-  var id: String {
-    self.rawValue
-  }
-}
-
 enum CustomizableToolbarItem: String {
   case backButton, forwardButton, urlSearchBar
-  
-  var id: String {
-    self.rawValue
-  }
 }
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
@@ -30,7 +18,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   var body: some CustomizableToolbarContent {
     ToolbarItem(id: CustomizableToolbarItem.urlSearchBar.id, placement: .automatic) {
       UrlSearchBarTextField(manager: manager)
-        .frame(minWidth: calculateTextFieldWidth(for: windowProperties.width), maxWidth: 800)
+        .frame(width: calculateUrlSearchBarWidth(for: windowProperties.width))
     }
     .customizationBehavior(.reorderable)
     
@@ -46,39 +34,19 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   }
 }
 
+
+#Preview {
+  ContentView()
+    .frame(width: 400, height: 600)
+}
+
+
 extension CustomizableBrowserToolbar {
-  fileprivate func calculateTextFieldWidth(for availableWidth: CGFloat) -> CGFloat {
+  fileprivate func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
     let minWidth: CGFloat = 240
     let maxWidth: CGFloat = 800
     let adaptiveWidth = availableWidth * 0.4
     
     return min(maxWidth, max(minWidth, adaptiveWidth))
   }
-}
-
-struct UrlSearchBarTextField: View {
-  let manager: ObservableWebViewManager
-  @State private var text: String = ""
-  
-  var body: some View {
-    TextField("Search or type URL", text: $text)
-      .textFieldStyle(RoundedBorderTextFieldStyle())
-      .onSubmit {
-        manager.load(text)
-      }
-      .onChange(of: manager.urlString) {
-        observedUrlChange()
-      }
-  }
-  
-  func observedUrlChange() {
-    guard let urlString = manager.urlString else { return }
-    text = urlString
-  }
-}
-
-
-#Preview {
-  ContentView()
-    .frame(width: 400, height: 600)
 }

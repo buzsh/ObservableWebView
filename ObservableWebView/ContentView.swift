@@ -7,26 +7,9 @@
 
 import SwiftUI
 
-@Observable
-class WindowProperties {
-  var width: CGFloat = 0
-}
-
-struct WindowPropertiesKey: EnvironmentKey {
-  static let defaultValue: WindowProperties = WindowProperties()
-}
-
-extension EnvironmentValues {
-  var windowProperties: WindowProperties {
-    get { self[WindowPropertiesKey.self] }
-    set { self[WindowPropertiesKey.self] = newValue }
-  }
-}
-
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
   @State private var webContentThemeColor: Color = .clear
-  
   @Environment(\.windowProperties) private var windowProperties
   
   var body: some View {

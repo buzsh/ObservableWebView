@@ -9,13 +9,6 @@ import SwiftUI
 import WebKit
 import Observation
 
-extension ObservableWebViewManager {
-  private struct Constants {
-    static let aboutBlank = "about:blank"
-    static let aboutBlankUrl = URL(string: Constants.aboutBlank)!
-  }
-}
-
 @Observable
 class ObservableWebViewManager {
   var webView: WKWebView = WKWebView()
