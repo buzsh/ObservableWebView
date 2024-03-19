@@ -18,8 +18,6 @@ struct UrlSearchBarTextField: View {
       if showTextField {
         TextField("Search or type URL", text: $text)
           .textFieldStyle(.plain)
-          .foregroundStyle(.primary)
-          .font(.system(size: 14, weight: .regular, design: .rounded))
           .onSubmit {
             manager.load(text)
           }
@@ -30,6 +28,8 @@ struct UrlSearchBarTextField: View {
           .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
       }
     }
+    .foregroundStyle(.primary)
+    .font(.system(size: 14, weight: .regular, design: .rounded))
     .onChange(of: manager.urlString) {
       observedUrlChange()
     }
