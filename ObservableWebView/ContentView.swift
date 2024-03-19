@@ -7,46 +7,56 @@
 
 import SwiftUI
 
+@Observable
+class WindowProperties {
+  var width: CGFloat = 0
+}
+
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
+  @State private var windowProperties = WindowProperties()
   @State private var webContentThemeColor: Color = .clear
   
   var body: some View {
-    VStack {
-      
-      ObservableWebView(manager: webViewManager)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-          webViewManager.webView.allowsBackForwardNavigationGestures = true
-          webViewManager.load("https://duckduckgo.com")
+    GeometryReader { geometry in
+      VStack {
+        ObservableWebView(manager: webViewManager)
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .onAppear {
+            webViewManager.webView.allowsBackForwardNavigationGestures = true
+            webViewManager.load("https://duckduckgo.com")
+          }
+          .onChange(of: webViewManager.urlString) {
+            observedUrlChange()
+          }
+          .onChange(of: webViewManager.progress) {
+            observedProgressChange()
+          }
+          .onChange(of: webViewManager.loadState) { oldState, newState in
+            observedLoadStateChange(from: oldState, to: newState)
+          }
+        
+        HStack {
+          Spacer()
+          Button("Load Wikipedia") {
+            webViewManager.load("https://www.wikipedia.org")
+          }
+          Button("Load Apple") {
+            webViewManager.load("https://apple.com")
+          }
+          Button("Theme Site") {
+            webViewManager.load("https://scinfu.github.io/SwiftSoup/")
+          }
+          Spacer()
         }
-        .onChange(of: webViewManager.urlString) {
-          observedUrlChange()
-        }
-        .onChange(of: webViewManager.progress) {
-          observedProgressChange()
-        }
-        .onChange(of: webViewManager.loadState) { oldState, newState in
-          observedLoadStateChange(from: oldState, to: newState)
-        }
-      
-      HStack {
-        Spacer()
-        Button("Load Wikipedia") {
-          webViewManager.load("https://www.wikipedia.org")
-        }
-        Button("Load Apple") {
-          webViewManager.load("https://apple.com")
-        }
-        Button("Theme Site") {
-          webViewManager.load("https://scinfu.github.io/SwiftSoup/")
-        }
-        Spacer()
+        .padding(.bottom, 8)
       }
-      .padding(.bottom, 8)
+      .onChange(of: geometry.size.width) {
+        windowProperties.width = geometry.size.width
+      }
     }
     .toolbar(id: CustomizableToolbar.editingtools.id) {
-      CustomizableBrowserToolbar(manager: webViewManager)
+      CustomizableBrowserToolbar(manager: webViewManager, windowProperties: windowProperties)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
     .navigationTitle("")

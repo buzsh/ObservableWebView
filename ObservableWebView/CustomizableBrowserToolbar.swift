@@ -25,10 +25,12 @@ enum CustomizableToolbarItem: String {
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   let manager: ObservableWebViewManager
+  let windowProperties: WindowProperties
   
   var body: some CustomizableToolbarContent {
     ToolbarItem(id: CustomizableToolbarItem.urlSearchBar.id, placement: .automatic) {
       UrlSearchBarTextField(manager: manager)
+        .frame(minWidth: calculateTextFieldWidth(for: windowProperties.width), maxWidth: 800)
     }
     .customizationBehavior(.reorderable)
     
@@ -44,6 +46,16 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   }
 }
 
+extension CustomizableBrowserToolbar {
+  fileprivate func calculateTextFieldWidth(for availableWidth: CGFloat) -> CGFloat {
+    let minWidth: CGFloat = 240
+    let maxWidth: CGFloat = 800
+    let adaptiveWidth = availableWidth * 0.4
+    
+    return min(maxWidth, max(minWidth, adaptiveWidth))
+  }
+}
+
 struct UrlSearchBarTextField: View {
   let manager: ObservableWebViewManager
   @State private var text: String = ""
@@ -51,7 +63,6 @@ struct UrlSearchBarTextField: View {
   var body: some View {
     TextField("Search or type URL", text: $text)
       .textFieldStyle(RoundedBorderTextFieldStyle())
-      .frame(minWidth: 150, maxWidth: 300)
       .onSubmit {
         manager.load(text)
       }
