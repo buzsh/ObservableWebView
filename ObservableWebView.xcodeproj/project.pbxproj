@@ -16,6 +16,7 @@
 		29C1098B2BA4E4BA00F88BBD /* PlatformColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1098A2BA4E4BA00F88BBD /* PlatformColor.swift */; };
 		29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1098D2BA4E89B00F88BBD /* SFSymbol.swift */; };
 		29C109912BA4E8CB00F88BBD /* SymbolButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C109902BA4E8CB00F88BBD /* SymbolButtons.swift */; };
+		29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */; };
 		29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */; };
 		29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 		29C1098A2BA4E4BA00F88BBD /* PlatformColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformColor.swift; sourceTree = "<group>"; };
 		29C1098D2BA4E89B00F88BBD /* SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbol.swift; sourceTree = "<group>"; };
 		29C109902BA4E8CB00F88BBD /* SymbolButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolButtons.swift; sourceTree = "<group>"; };
+		29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableBrowserToolbar.swift; sourceTree = "<group>"; };
 		29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewManager.swift; sourceTree = "<group>"; };
 		29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +72,7 @@
 			children = (
 				29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */,
 				29A079DA2BA49C79006B9A80 /* ContentView.swift */,
+				29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */,
 				29C109892BA4E4A600F88BBD /* Plugins */,
 				29C109832BA4C45500F88BBD /* Package */,
 				29A079DC2BA49C7A006B9A80 /* Assets.xcassets */,
@@ -204,6 +207,7 @@
 			files = (
 				29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */,
 				29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */,
+				29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */,
 				29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */,
 				29C109822BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift in Sources */,
 				29A079DB2BA49C79006B9A80 /* ContentView.swift in Sources */,
