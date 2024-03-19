@@ -25,11 +25,11 @@ struct UrlSearchBarTextField: View {
           .onSubmit {
             manager.load(text)
           }
-          .urlBarStyle(windowWidth: windowProperties.width)
+          .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
       } else {
         Text(prettyUrl(from: manager.urlString))
           .onTapGesture { showTextField = true }
-          .urlBarStyle(windowWidth: windowProperties.width)
+          .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
       }
     }
     .onChange(of: manager.urlString) {
@@ -64,17 +64,31 @@ struct UrlSearchBarTextField: View {
 
 
 struct UrlBarStyleModifier: ViewModifier {
-  var windowWidth: CGFloat
+  let themeColor: Color
+  var width: CGFloat
+  @State private var borderColor: Color = .secondary
   
   func body(content: Content) -> some View {
     content
       .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
       .overlay(
         RoundedRectangle(cornerRadius: 8)
-          .stroke(Color.secondary.opacity(0.25), lineWidth: 1)
-          .frame(width: calculateUrlSearchBarWidth(for: windowWidth))
+          .stroke(borderColor, lineWidth: 1)
+          .frame(width: calculateUrlSearchBarWidth(for: width))
       )
-      .frame(width: calculateUrlSearchBarWidth(for: windowWidth))
+      .frame(width: calculateUrlSearchBarWidth(for: width))
+      .onAppear {
+        updateBorderColorWithAnimation()
+      }
+      .onChange(of: themeColor) {
+        updateBorderColorWithAnimation()
+      }
+  }
+  
+  private func updateBorderColorWithAnimation() {
+    withAnimation {
+      borderColor = themeColor == .clear ? .secondary.opacity(0.3) : .secondary
+    }
   }
   
   private func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
@@ -87,7 +101,7 @@ struct UrlBarStyleModifier: ViewModifier {
 }
 
 extension View {
-  func urlBarStyle(windowWidth: CGFloat) -> some View {
-    self.modifier(UrlBarStyleModifier(windowWidth: windowWidth))
+  func urlBarStyle(themeColor: Color, width: CGFloat) -> some View {
+    self.modifier(UrlBarStyleModifier(themeColor: themeColor, width: width))
   }
 }
