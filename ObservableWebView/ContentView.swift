@@ -45,16 +45,16 @@ struct ContentView: View {
           Spacer()
         }
         .padding(.bottom, 8)
+        
       }
       .onChange(of: geometry.size.width) {
         windowProperties.width = geometry.size.width
       }
     }
-    .toolbar(id: CustomizableToolbar.editingtools.id) {
+    .toolbar(id: ToolbarIdentifier.editingtools.id) {
       CustomizableBrowserToolbar(manager: webViewManager)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
-    .navigationTitle("")
   }
   
   func observedUrlChange() {

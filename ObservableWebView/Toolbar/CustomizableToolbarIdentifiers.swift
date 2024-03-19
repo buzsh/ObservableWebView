@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CustomizableToolbar: String {
+enum ToolbarIdentifier: String {
   case editingtools
   
   var id: String {
@@ -15,7 +15,7 @@ enum CustomizableToolbar: String {
   }
 }
 
-extension CustomizableToolbarItem {
+extension ToolbarItemIdentifier {
   var id: String {
     self.rawValue
   }

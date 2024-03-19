@@ -14,6 +14,8 @@ struct UrlSearchBarTextField: View {
   var body: some View {
     TextField("Search or type URL", text: $text)
       .textFieldStyle(RoundedBorderTextFieldStyle())
+      .foregroundStyle(.primary)
+      .font(.system(size: 14, weight: .regular, design: .rounded))
       .onSubmit {
         manager.load(text)
       }

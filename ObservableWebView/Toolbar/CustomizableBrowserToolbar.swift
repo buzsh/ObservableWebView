@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum CustomizableToolbarItem: String {
+enum ToolbarItemIdentifier: String {
   case backButton, forwardButton, urlSearchBar
 }
 
@@ -16,20 +16,38 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   @Environment(\.windowProperties) private var windowProperties
   
   var body: some CustomizableToolbarContent {
-    ToolbarItem(id: CustomizableToolbarItem.urlSearchBar.id, placement: .automatic) {
+    spacer
+    backButton
+    urlSearchBarTextField
+    forwardButton
+    spacer
+  }
+  
+  var urlSearchBarTextField: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.urlSearchBar.id, placement: .automatic) {
       UrlSearchBarTextField(manager: manager)
         .frame(width: calculateUrlSearchBarWidth(for: windowProperties.width))
     }
     .customizationBehavior(.reorderable)
-    
-    ToolbarItem(id: CustomizableToolbarItem.backButton.id, placement: .automatic) {
+  }
+  
+  var backButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.backButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
         .disabled(!manager.canGoBack)
     }
-    
-    ToolbarItem(id: CustomizableToolbarItem.forwardButton.id, placement: .automatic) {
+  }
+  
+  var forwardButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.forwardButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
         .disabled(!manager.canGoForward)
+    }
+  }
+  
+  var spacer: some CustomizableToolbarContent {
+    ToolbarItem(id: "spacer", placement: .automatic) {
+      Spacer()
     }
   }
 }
