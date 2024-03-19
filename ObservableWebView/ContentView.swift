@@ -78,25 +78,6 @@ struct ContentView: View {
   }
 }
 
-import SwiftUI
-
-struct NavigationToolbarContent: ToolbarContent {
-  let manager: ObservableWebViewManager
-  
-  init(manager: ObservableWebViewManager) {
-    self.manager = manager
-  }
-  
-  var body: some ToolbarContent {
-    ToolbarItemGroup(placement: .automatic) {
-      ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
-        .disabled(!manager.canGoBack)
-      ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
-        .disabled(!manager.canGoForward)
-    }
-  }
-}
-
 #Preview {
   ContentView()
     .frame(width: 400, height: 600)
@@ -132,17 +113,13 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   
   var body: some CustomizableToolbarContent {
     ToolbarItem(id: "backButton", placement: .automatic) {
-      Button(action: manager.goBack) {
-        Label("Back", systemImage: "arrow.left")
-      }
-      .disabled(!manager.canGoBack)
+      ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
+        .disabled(!manager.canGoBack)
     }
     
     ToolbarItem(id: "forwardButton", placement: .automatic) {
-      Button(action: manager.goForward) {
-        Label("Forward", systemImage: "arrow.right")
-      }
-      .disabled(!manager.canGoForward)
+      ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
+        .disabled(!manager.canGoForward)
     }
     
     ToolbarItem(id: "urlSearchBar", placement: .automatic) {
