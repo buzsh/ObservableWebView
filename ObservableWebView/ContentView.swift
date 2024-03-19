@@ -14,8 +14,9 @@ class WindowProperties {
 
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
-  @State private var windowProperties = WindowProperties()
   @State private var webContentThemeColor: Color = .clear
+  
+  @Environment(WindowProperties.self) private var windowProperties
   
   var body: some View {
     GeometryReader { geometry in
@@ -56,7 +57,7 @@ struct ContentView: View {
       }
     }
     .toolbar(id: CustomizableToolbar.editingtools.id) {
-      CustomizableBrowserToolbar(manager: webViewManager, windowProperties: windowProperties)
+      CustomizableBrowserToolbar(manager: webViewManager)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
     .navigationTitle("")
