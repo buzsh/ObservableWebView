@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
-  
   @State private var webContentThemeColor: Color = .clear
+  @State private var toolbarStringText = ""
   
   var body: some View {
     VStack {
@@ -46,9 +46,8 @@ struct ContentView: View {
       }
       .padding(.bottom, 8)
     }
-    .toolbar {
-      NavigationToolbarContent(manager: webViewManager)
-      browserToolbar
+    .toolbar(id: "editingtools") {
+      CustomizableBrowserToolbar(manager: webViewManager, toolbarStringText: $toolbarStringText)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
     .navigationTitle("")
@@ -76,33 +75,6 @@ struct ContentView: View {
     default:
       break
     }
-  }
-  
-  @State private var toolbarStringText = ""
-  
-  private var browserToolbar: some ToolbarContent {
-    ToolbarItemGroup(placement: .navigation, content: {
-      /*
-      ToolbarSymbolButton(title: "Back", symbol: .back, action: {
-        webViewManager.goBack()
-      })
-      .disabled(webViewManager.canGoBack == false)
-      
-      ToolbarSymbolButton(title: "Forward", symbol: .forward, action: {
-        webViewManager.webView.goForward()
-      })
-      .disabled(webViewManager.webView.canGoForward == false)
-      */
-      TextField("Search or type URL", text: $toolbarStringText, onCommit: {
-        webViewManager.load(toolbarStringText)
-      })
-      .textFieldStyle(RoundedBorderTextFieldStyle())
-      .frame(minWidth: 150, maxWidth: 1000)
-      .onChange(of: webViewManager.urlString) {
-        toolbarStringText = webViewManager.urlString
-      }
-      
-    })
   }
 }
 
@@ -148,6 +120,41 @@ extension ContentView {
   func updateWebContentThemeColor(to color: Color) {
     withAnimation {
       webContentThemeColor = color
+    }
+  }
+}
+
+import SwiftUI
+
+struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
+  let manager: ObservableWebViewManager
+  @Binding var toolbarStringText: String
+  
+  var body: some CustomizableToolbarContent {
+    ToolbarItem(id: "backButton", placement: .automatic) {
+      Button(action: manager.goBack) {
+        Label("Back", systemImage: "arrow.left")
+      }
+      .disabled(!manager.canGoBack)
+    }
+    
+    ToolbarItem(id: "forwardButton", placement: .automatic) {
+      Button(action: manager.goForward) {
+        Label("Forward", systemImage: "arrow.right")
+      }
+      .disabled(!manager.canGoForward)
+    }
+    
+    ToolbarItem(id: "urlSearchBar", placement: .automatic) {
+      TextField("Search or type URL", text: $toolbarStringText)
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .frame(minWidth: 150, maxWidth: 300)
+        .onSubmit {
+          manager.load(toolbarStringText)
+        }
+        .onChange(of: manager.urlString) {
+          toolbarStringText = manager.urlString
+        }
     }
   }
 }

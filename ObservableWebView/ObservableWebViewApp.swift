@@ -13,5 +13,8 @@ struct ObservableWebViewApp: App {
     WindowGroup {
       ContentView()
     }
+    .commands {
+      ToolbarCommands()
+    }
   }
 }
