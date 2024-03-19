@@ -16,12 +16,30 @@ struct UrlSearchBarTextField: View {
   var body: some View {
     ZStack {
       if showTextField {
-        TextField("Search or type URL", text: $text)
-          .textFieldStyle(.plain)
-          .onSubmit {
-            manager.load(text)
+        HStack {
+          Image(systemName: "magnifyingglass")
+            .foregroundColor(.secondary)
+            .onTapGesture {
+              showTextField = false
+            }
+           
+          TextField("Search or type URL", text: $text)
+            .textFieldStyle(.plain)
+            .onSubmit {
+              manager.load(text)
+            }
+          
+          if !text.isEmpty {
+            Image(systemName: "xmark.circle.fill")
+              .foregroundColor(.secondary.opacity(0.9))
+              .scaleEffect(0.9)
+              .onTapGesture {
+                text = ""
+              }
           }
-          .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        }
+        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        
       } else {
         Text(prettyUrl(from: manager.urlString))
           .onTapGesture { showTextField = true }
