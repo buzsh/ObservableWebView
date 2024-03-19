@@ -7,22 +7,30 @@
 
 import SwiftUI
 
+enum CustomizableToolbarItem: String {
+  case backButton, forwardButton, urlSearchBar
+  
+  var id: String {
+    self.rawValue
+  }
+}
+
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   let manager: ObservableWebViewManager
   @Binding var toolbarStringText: String
   
   var body: some CustomizableToolbarContent {
-    ToolbarItem(id: "backButton", placement: .automatic) {
+    ToolbarItem(id: CustomizableToolbarItem.backButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
         .disabled(!manager.canGoBack)
     }
     
-    ToolbarItem(id: "forwardButton", placement: .automatic) {
+    ToolbarItem(id: CustomizableToolbarItem.forwardButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
         .disabled(!manager.canGoForward)
     }
     
-    ToolbarItem(id: "urlSearchBar", placement: .automatic) {
+    ToolbarItem(id: CustomizableToolbarItem.urlSearchBar.id, placement: .automatic) {
       TextField("Search or type URL", text: $toolbarStringText)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .frame(minWidth: 150, maxWidth: 300)
