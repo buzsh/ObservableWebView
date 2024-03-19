@@ -54,7 +54,8 @@ struct ContentView: View {
   }
   
   func observedUrlChange() {
-    print("webViewManager.urlString: \(webViewManager.urlString)")
+    guard let urlString = webViewManager.urlString else { return }
+    print("webViewManager.urlString: \(urlString)")
   }
   
   func observedProgressChange() {

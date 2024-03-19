@@ -22,7 +22,7 @@ class ObservableWebViewManager {
   /// The current state of the WKWebView object.
   var loadState: ObservableWebViewLoadState = .idle
   var progress: Double = 0
-  var urlString: String = ""
+  var urlString: String?
   
   var canGoBack: Bool = false
   var canGoForward: Bool = false
@@ -35,15 +35,17 @@ class ObservableWebViewManager {
     webView.goForward()
   }
   
-  init(urlString: String = Constants.aboutBlank) {
+  init(urlString: String? = nil) {
     self.webView = WKWebView()
     self.urlString = urlString
-    load(urlString)
+    if let urlString = urlString, !urlString.isEmpty {
+      load(urlString)
+    }
   }
   
   func load(_ urlString: String) {
     updateUrlString(withString: urlString)
-    let url = URL(string: urlString) ?? Constants.aboutBlankUrl
+    guard let url = URL(string: urlString) else { return }
     let request = URLRequest(url: url)
     webView.load(request)
   }

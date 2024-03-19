@@ -38,7 +38,9 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
           manager.load(toolbarStringText)
         }
         .onChange(of: manager.urlString) {
-          toolbarStringText = manager.urlString
+          if let urlString = manager.urlString {
+            toolbarStringText = urlString
+          }
         }
     }
   }
