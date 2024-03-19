@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
   @State private var webContentThemeColor: Color = .clear
-  @State private var toolbarStringText = ""
   
   var body: some View {
     VStack {
@@ -47,7 +46,7 @@ struct ContentView: View {
       .padding(.bottom, 8)
     }
     .toolbar(id: CustomizableToolbar.editingtools.id) {
-      CustomizableBrowserToolbar(manager: webViewManager, toolbarStringText: $toolbarStringText)
+      CustomizableBrowserToolbar(manager: webViewManager)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
     .navigationTitle("")
