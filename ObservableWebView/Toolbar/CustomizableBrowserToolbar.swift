@@ -31,17 +31,21 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
     .customizationBehavior(.reorderable)
   }
   
+  @State private var canGoBack = false
   var backButton: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.backButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Back", symbol: .back, action: manager.goBack)
-        .disabled(!manager.canGoBack)
+        .disabled(!canGoBack)
+        .animateOnChange(of: manager.canGoBack, with: $canGoBack)
     }
   }
   
+  @State private var canGoForward = false
   var forwardButton: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.forwardButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
-        .disabled(!manager.canGoForward)
+        .disabled(!canGoForward)
+        .animateOnChange(of: manager.canGoForward, with: $canGoForward)
     }
   }
   

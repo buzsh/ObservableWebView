@@ -20,6 +20,8 @@ class ObservableWebViewManager {
   var canGoBack: Bool = false
   var canGoForward: Bool = false
   
+  var themeColor: Color = .clear
+  
   func goBack() {
     webView.goBack()
   }
