@@ -17,6 +17,10 @@ struct ContentView: View {
       
       ObservableWebView(manager: webViewManager)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+          webViewManager.webView.allowsBackForwardNavigationGestures = true
+          webViewManager.load("https://duckduckgo.com")
+        }
         .onChange(of: webViewManager.urlString) {
           observedUrlChange()
         }
