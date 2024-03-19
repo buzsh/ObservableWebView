@@ -13,8 +13,6 @@ struct UrlSearchBarTextField: View {
   @State private var text: String = ""
   @State private var showTextField: Bool = false
   
-  @Environment(\.isFocused) private var isFocused
-  
   var body: some View {
     ZStack {
       if showTextField {
@@ -66,7 +64,7 @@ struct UrlSearchBarTextField: View {
 struct UrlBarStyleModifier: ViewModifier {
   let themeColor: Color
   var width: CGFloat
-  @State private var borderColor: Color = .secondary
+  @State private var borderColor: Color = .secondary.opacity(0.3)
   
   func body(content: Content) -> some View {
     content
