@@ -24,13 +24,8 @@ class ObservableWebViewManager {
   var progress: Double = 0
   var urlString: String = ""
   
-  var canGoBack: Bool {
-    webView.canGoBack
-  }
-  
-  var canGoForward: Bool {
-    webView.canGoForward
-  }
+  var canGoBack: Bool = false
+  var canGoForward: Bool = false
   
   func goBack() {
     webView.goBack()
