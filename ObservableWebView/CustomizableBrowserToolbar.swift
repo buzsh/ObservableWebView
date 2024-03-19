@@ -25,7 +25,7 @@ enum CustomizableToolbarItem: String {
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   let manager: ObservableWebViewManager
-  @Environment(WindowProperties.self) private var windowProperties
+  @Environment(\.windowProperties) private var windowProperties
   
   var body: some CustomizableToolbarContent {
     ToolbarItem(id: CustomizableToolbarItem.urlSearchBar.id, placement: .automatic) {
