@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+enum CustomizableToolbar: String {
+  case editingtools
+  
+  var id: String {
+    self.rawValue
+  }
+}
+
 enum CustomizableToolbarItem: String {
   case backButton, forwardButton, urlSearchBar
   

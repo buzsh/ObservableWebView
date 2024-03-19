@@ -46,7 +46,7 @@ struct ContentView: View {
       }
       .padding(.bottom, 8)
     }
-    .toolbar(id: "editingtools") {
+    .toolbar(id: CustomizableToolbar.editingtools.id) {
       CustomizableBrowserToolbar(manager: webViewManager, toolbarStringText: $toolbarStringText)
     }
     .toolbarBackground(webContentThemeColor, for: .windowToolbar)
