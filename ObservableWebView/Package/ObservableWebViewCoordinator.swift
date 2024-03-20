@@ -10,15 +10,18 @@ import WebKit
 
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var observableWebView: ObservableWebView
+  
   private var progressObservation: NSKeyValueObservation?
   private var canGoBackObservation: NSKeyValueObservation?
   private var canGoForwardObservation: NSKeyValueObservation?
+  private var hasOnlySecureContentObservation: NSKeyValueObservation?
   
   init(_ webView: ObservableWebView) {
     self.observableWebView = webView
     super.init()
     setupProgressObservation()
-    setupCanGoBackAndForwardObservation()
+    setupCanGoBackAndForwardObservations()
+    setupEssentialWebKitObservations()
     setupNonEssentialWebKitObservations()
   }
   
@@ -42,6 +45,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
     observableWebView.manager.updateUrlString(withUrl: webView.url)
     
     Task { await updateWebViewContentThemeColor() }
+    fetchFavicon()
   }
   
   func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -78,7 +82,7 @@ extension ObservableWebViewCoordinator {
     }
   }
   
-  private func setupCanGoBackAndForwardObservation() {
+  private func setupCanGoBackAndForwardObservations() {
     canGoBackObservation = observableWebView.manager.webView.observe(\.canGoBack, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.canGoBack = webView.canGoBack
     }
@@ -88,8 +92,83 @@ extension ObservableWebViewCoordinator {
     }
   }
   
+  private func setupEssentialWebKitObservations() {
+    hasOnlySecureContentObservation = observableWebView.manager.webView.observe(\.hasOnlySecureContent, options: .new) { [weak self] webView, _ in
+      self?.observableWebView.manager.isSecurePage = webView.hasOnlySecureContent
+    }
+  }
+  
   private func setupNonEssentialWebKitObservations() {
     
+  }
+}
+  
+extension ObservableWebViewCoordinator {
+  private func fetchFavicon() {
+    let faviconScript = """
+      (function() {
+          var links = document.getElementsByTagName('link');
+          var icons = Array.from(links).filter(function(link) {
+              return link.getAttribute('rel') === 'icon' || link.getAttribute('rel').includes('icon');
+          });
+          return icons.length > 0 ? icons[0].href : '';
+      })();
+      """
+    
+    Task {
+      let result = await executeJavaScript(faviconScript)
+      switch result {
+      case .success(let url):
+        if let urlString = url as? String, let faviconUrl = URL(string: urlString) {
+          // Await the download and cache function, then set the favicon
+          let faviconImage = await downloadAndCacheFavicon(from: faviconUrl)
+          await MainActor.run {
+            self.observableWebView.manager.favicon = faviconImage
+          }
+        } else {
+          // No valid URL found
+          await MainActor.run {
+            self.observableWebView.manager.favicon = nil
+          }
+        }
+      case .failure:
+        // JavaScript execution failed
+        await MainActor.run {
+          self.observableWebView.manager.favicon = nil
+        }
+      }
+    }
+  }
+  
+  @MainActor
+  private func executeJavaScript(_ script: String) async -> Result<Any?, Error> {
+    do {
+      let result = try await observableWebView.manager.webView.evaluateJavaScript(script)
+      return .success(result)
+    } catch {
+      return .failure(error)
+    }
+  }
+}
+
+extension ObservableWebViewCoordinator {
+  func downloadAndCacheFavicon(from url: URL) async -> Image? {
+    do {
+      let (data, _) = try await URLSession.shared.data(from: url)
+
+      #if os(iOS)
+      if let uiImage = UIImage(data: data) {
+        return Image(uiImage: uiImage)
+      }
+      #elseif os(macOS)
+      if let nsImage = NSImage(data: data) {
+        return Image(nsImage: nsImage)
+      }
+      #endif
+    } catch {
+      print("Error downloading favicon: \(error)")
+    }
+    return nil
   }
 }
 
