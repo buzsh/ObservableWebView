@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
   @State var webViewManager = ObservableWebViewManager()
-  @State private var webContentThemeColor: Color = .clear
   @Environment(\.windowProperties) private var windowProperties
+  @State private var toolbarBackgroundColor: Color = .clear
   
   var body: some View {
     GeometryReader { geometry in
@@ -54,7 +54,8 @@ struct ContentView: View {
     .toolbar(id: ToolbarIdentifier.editingtools.id) {
       CustomizableBrowserToolbar(manager: webViewManager)
     }
-    .toolbarBackground(webContentThemeColor, for: .windowToolbar)
+    .toolbarBackground(toolbarBackgroundColor, for: .windowToolbar)
+    .animateOnChange(of: webViewManager.themeColor, with: $toolbarBackgroundColor)
   }
   
   func observedUrlChange() {
@@ -73,7 +74,7 @@ struct ContentView: View {
       print("webView is loading")
       // quick fade-in progress bar
     case .isFinished:
-      Task { await updateWebTheme() }
+      print("webView is finished loading")
       // stanadrd fade-out progress bar
     case .error(let error):
       print("webView encountered an error: \(error.localizedDescription)")
@@ -86,26 +87,4 @@ struct ContentView: View {
 #Preview {
   ContentView()
     .frame(width: 400, height: 600)
-}
-
-extension ContentView {
-  @MainActor
-  private func updateWebTheme() async {
-    let themeColorScript = "document.querySelector('meta[name=\\\"theme-color\\\"]').getAttribute('content');"
-    
-    do {
-      if let themeColorString = try await webViewManager.webView.evaluateJavaScript(themeColorScript) as? String,
-         let themeColor = PlatformColor(hex: themeColorString) {
-        updateWebContentThemeColor(to: Color(themeColor))
-      }
-    } catch {
-      updateWebContentThemeColor(to: .clear)
-    }
-  }
-  
-  func updateWebContentThemeColor(to color: Color) {
-    withAnimation {
-      webContentThemeColor = color
-    }
-  }
 }
