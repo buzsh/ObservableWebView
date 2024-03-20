@@ -19,6 +19,7 @@ enum SFSymbol: String {
   case bonjour
   case trash
   case lock
+  case star
   
   case folder
   

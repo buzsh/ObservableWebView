@@ -17,6 +17,7 @@ struct UrlSearchBarTextField: View {
     ZStack {
       if showTextField {
         HStack {
+          
           Image(systemName: "magnifyingglass")
             .foregroundColor(.secondary)
             .onTapGesture {
@@ -31,7 +32,7 @@ struct UrlSearchBarTextField: View {
           
           if !text.isEmpty {
             Image(systemName: "xmark.circle.fill")
-              .foregroundColor(.secondary.opacity(0.9))
+              .foregroundColor(.secondary)
               .scaleEffect(0.9)
               .onTapGesture {
                 text = ""
@@ -41,15 +42,41 @@ struct UrlSearchBarTextField: View {
         .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
         
       } else {
-        Text(prettyUrl(from: manager.urlString))
-          .onTapGesture { showTextField = true }
-          .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        HStack {
+          if manager.isSecurePage {
+            Image(systemName: "lock.fill")
+              .foregroundColor(.secondary)
+          } else {
+            Image(systemName: "lock.slash.fill")
+              .foregroundColor(.secondary)
+          }
+          
+          Spacer()
+          
+          if let favicon = manager.favicon {
+            favicon
+              .resizable()
+              .foregroundColor(.secondary)
+              .frame(width: 18, height: 18)
+          } else {
+            /*
+            Image(systemName: "globe")
+              .foregroundColor(.secondary)
+             */
+          }
+          
+          Text(prettyUrl(from: manager.urlString))
+            .onTapGesture { showTextField = true }
+          
+          Spacer()
+        }
+        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
       }
     }
     .foregroundStyle(.primary)
     .font(.system(size: 14, weight: .regular, design: .rounded))
-    .onChange(of: manager.urlString) {
-      observedUrlChange()
+    .onChange(of: manager.urlString ?? "") { oldUrl, newUrl in
+      observedUrlChange(from: oldUrl, to: newUrl)
     }
     .onChange(of: showTextField) {
       if showTextField {
@@ -58,7 +85,7 @@ struct UrlSearchBarTextField: View {
     }
   }
   
-  func observedUrlChange() {
+  func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
     showTextField = false
     text = prettyUrl(from: manager.urlString)
   }

@@ -10,26 +10,31 @@ import WebKit
 
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var observableWebView: ObservableWebView
-  private var progressObservation: NSKeyValueObservation?
+  
+  private var urlObservation: NSKeyValueObservation?
   private var canGoBackObservation: NSKeyValueObservation?
   private var canGoForwardObservation: NSKeyValueObservation?
+  private var progressObservation: NSKeyValueObservation?
+  private var hasOnlySecureContentObservation: NSKeyValueObservation?
   
   init(_ webView: ObservableWebView) {
     self.observableWebView = webView
     super.init()
-    setupProgressObservation()
-    setupCanGoBackAndForwardObservation()
+    setupEssentialWebKitObservations()
     setupNonEssentialWebKitObservations()
   }
   
   deinit {
-    progressObservation?.invalidate()
+    urlObservation?.invalidate()
     canGoBackObservation?.invalidate()
     canGoForwardObservation?.invalidate()
+    progressObservation?.invalidate()
+    hasOnlySecureContentObservation?.invalidate()
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     observableWebView.manager.loadState = .isLoading
+    observableWebView.manager.favicon = nil
   }
   
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -42,6 +47,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
     observableWebView.manager.updateUrlString(withUrl: webView.url)
     
     Task { await updateWebViewContentThemeColor() }
+    fetchFavicon()
   }
   
   func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -64,9 +70,25 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
       }
     }
   }
+  
+  @MainActor
+  private func executeJavaScript(_ script: String) async -> Result<Any?, Error> {
+    do {
+      let result = try await observableWebView.manager.webView.evaluateJavaScript(script)
+      return .success(result)
+    } catch {
+      return .failure(error)
+    }
+  }
 }
 
+// MARK: Essential WebKit Observers
 extension ObservableWebViewCoordinator {
+  private func setupEssentialWebKitObservations() {
+    setupNavigationObservations()
+    setupProgressObservation()
+  }
+  
   private func setupProgressObservation() {
     progressObservation = observableWebView.manager.webView.observe(\.estimatedProgress, options: .new) { [weak self] webView, change in
       guard let self = self else { return }
@@ -78,7 +100,11 @@ extension ObservableWebViewCoordinator {
     }
   }
   
-  private func setupCanGoBackAndForwardObservation() {
+  private func setupNavigationObservations() {
+    urlObservation = observableWebView.manager.webView.observe(\.url, options: .new) { [weak self] webView, _ in
+      self?.observableWebView.manager.updateUrlString(withUrl: webView.url)
+    }
+    
     canGoBackObservation = observableWebView.manager.webView.observe(\.canGoBack, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.canGoBack = webView.canGoBack
     }
@@ -86,10 +112,27 @@ extension ObservableWebViewCoordinator {
     canGoForwardObservation = observableWebView.manager.webView.observe(\.canGoForward, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.canGoForward = webView.canGoForward
     }
+    
+    hasOnlySecureContentObservation = observableWebView.manager.webView.observe(\.hasOnlySecureContent, options: .new) { [weak self] webView, _ in
+      self?.observableWebView.manager.isSecurePage = webView.hasOnlySecureContent
+    }
   }
+}
   
+// MARK: Non-Essential WebKit Observers
+extension ObservableWebViewCoordinator {
   private func setupNonEssentialWebKitObservations() {
     
+  }
+}
+  
+extension ObservableWebViewCoordinator {
+  private func fetchFavicon() {
+    let faviconService = ObservableFaviconService(webView: observableWebView.manager.webView)
+    
+    faviconService.fetchFavicon { [weak self] image in
+      self?.observableWebView.manager.favicon = image
+    }
   }
 }
 
