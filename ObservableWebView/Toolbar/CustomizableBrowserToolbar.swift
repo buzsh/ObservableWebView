@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ToolbarItemIdentifier: String {
-  case spacer, urlSearchBar, backButton, forwardButton, refreshButton
+  case spacer, urlSearchBar, backButton, forwardButton, refreshButton, bookmarkButton, shareButton
 }
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
@@ -20,8 +20,10 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
     forwardButton
     spacer
     urlSearchBarTextField
-    spacer
     refreshButton
+    spacer
+    bookmarkButton
+    shareButton
   }
   
   var urlSearchBarTextField: some CustomizableToolbarContent {
@@ -59,6 +61,24 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
         .onLongPressGesture(perform: {
           manager.forceRefresh()
         })
+    }
+  }
+  
+  @State private var canBookmark = false
+  var bookmarkButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.bookmarkButton.id, placement: .automatic) {
+      ToolbarSymbolButton(title: "Bookmark", symbol: .star, action: { print("BOOKMARK") })
+        .disabled(!canBookmark)
+        .animateOnChange(of: manager.urlString != nil, with: $canBookmark)
+    }
+  }
+  
+  @State private var canShare = false
+  var shareButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.shareButton.id, placement: .automatic) {
+      ToolbarSymbolButton(title: "Share", symbol: .share, action: { print("SHARE") })
+        .disabled(!canShare)
+        .animateOnChange(of: manager.urlString != nil, with: $canShare)
     }
   }
   
