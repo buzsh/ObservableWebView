@@ -16,10 +16,11 @@ class ObservableWebViewManager {
   var loadState: ObservableWebViewLoadState = .idle
   var progress: Double = 0
   var urlString: String?
-  
   var canGoBack: Bool = false
   var canGoForward: Bool = false
-  
+  var isSecurePage: Bool = false
+  // Non-Essential
+  var favicon: Image? = nil
   var themeColor: Color = .clear
   
   func goBack() {
@@ -28,6 +29,14 @@ class ObservableWebViewManager {
   
   func goForward() {
     webView.goForward()
+  }
+  
+  func refresh() {
+    webView.reload()
+  }
+  
+  func forceRefresh() {
+    webView.reloadFromOrigin()
   }
   
   init(urlString: String? = nil) {
