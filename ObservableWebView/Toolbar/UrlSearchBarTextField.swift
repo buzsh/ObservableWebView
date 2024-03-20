@@ -44,7 +44,7 @@ struct UrlSearchBarTextField: View {
       } else {
         HStack {
           if manager.isSecurePage {
-            Image(systemName: "lock.shield.fill")
+            Image(systemName: "lock.fill")
               .foregroundColor(.secondary)
           } else {
             Image(systemName: "lock.slash.fill")
@@ -59,8 +59,10 @@ struct UrlSearchBarTextField: View {
               .foregroundColor(.secondary)
               .frame(width: 18, height: 18)
           } else {
+            /*
             Image(systemName: "globe")
               .foregroundColor(.secondary)
+             */
           }
           
           Text(prettyUrl(from: manager.urlString))

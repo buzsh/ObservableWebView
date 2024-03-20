@@ -11,28 +11,30 @@ import WebKit
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var observableWebView: ObservableWebView
   
-  private var progressObservation: NSKeyValueObservation?
+  private var urlObservation: NSKeyValueObservation?
   private var canGoBackObservation: NSKeyValueObservation?
   private var canGoForwardObservation: NSKeyValueObservation?
+  private var progressObservation: NSKeyValueObservation?
   private var hasOnlySecureContentObservation: NSKeyValueObservation?
   
   init(_ webView: ObservableWebView) {
     self.observableWebView = webView
     super.init()
-    setupProgressObservation()
-    setupCanGoBackAndForwardObservations()
     setupEssentialWebKitObservations()
     setupNonEssentialWebKitObservations()
   }
   
   deinit {
-    progressObservation?.invalidate()
+    urlObservation?.invalidate()
     canGoBackObservation?.invalidate()
     canGoForwardObservation?.invalidate()
+    progressObservation?.invalidate()
+    hasOnlySecureContentObservation?.invalidate()
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     observableWebView.manager.loadState = .isLoading
+    observableWebView.manager.favicon = nil
   }
   
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -68,9 +70,25 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
       }
     }
   }
+  
+  @MainActor
+  private func executeJavaScript(_ script: String) async -> Result<Any?, Error> {
+    do {
+      let result = try await observableWebView.manager.webView.evaluateJavaScript(script)
+      return .success(result)
+    } catch {
+      return .failure(error)
+    }
+  }
 }
 
+// MARK: Essential WebKit Observers
 extension ObservableWebViewCoordinator {
+  private func setupEssentialWebKitObservations() {
+    setupNavigationObservations()
+    setupProgressObservation()
+  }
+  
   private func setupProgressObservation() {
     progressObservation = observableWebView.manager.webView.observe(\.estimatedProgress, options: .new) { [weak self] webView, change in
       guard let self = self else { return }
@@ -82,7 +100,11 @@ extension ObservableWebViewCoordinator {
     }
   }
   
-  private func setupCanGoBackAndForwardObservations() {
+  private func setupNavigationObservations() {
+    urlObservation = observableWebView.manager.webView.observe(\.url, options: .new) { [weak self] webView, _ in
+      self?.observableWebView.manager.updateUrlString(withUrl: webView.url)
+    }
+    
     canGoBackObservation = observableWebView.manager.webView.observe(\.canGoBack, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.canGoBack = webView.canGoBack
     }
@@ -90,14 +112,15 @@ extension ObservableWebViewCoordinator {
     canGoForwardObservation = observableWebView.manager.webView.observe(\.canGoForward, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.canGoForward = webView.canGoForward
     }
-  }
-  
-  private func setupEssentialWebKitObservations() {
+    
     hasOnlySecureContentObservation = observableWebView.manager.webView.observe(\.hasOnlySecureContent, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.isSecurePage = webView.hasOnlySecureContent
     }
   }
+}
   
+// MARK: Non-Essential WebKit Observers
+extension ObservableWebViewCoordinator {
   private func setupNonEssentialWebKitObservations() {
     
   }
@@ -120,19 +143,16 @@ extension ObservableWebViewCoordinator {
       switch result {
       case .success(let url):
         if let urlString = url as? String, let faviconUrl = URL(string: urlString) {
-          // Await the download and cache function, then set the favicon
           let faviconImage = await downloadAndCacheFavicon(from: faviconUrl)
           await MainActor.run {
             self.observableWebView.manager.favicon = faviconImage
           }
         } else {
-          // No valid URL found
           await MainActor.run {
             self.observableWebView.manager.favicon = nil
           }
         }
       case .failure:
-        // JavaScript execution failed
         await MainActor.run {
           self.observableWebView.manager.favicon = nil
         }
@@ -140,15 +160,7 @@ extension ObservableWebViewCoordinator {
     }
   }
   
-  @MainActor
-  private func executeJavaScript(_ script: String) async -> Result<Any?, Error> {
-    do {
-      let result = try await observableWebView.manager.webView.evaluateJavaScript(script)
-      return .success(result)
-    } catch {
-      return .failure(error)
-    }
-  }
+  
 }
 
 extension ObservableWebViewCoordinator {

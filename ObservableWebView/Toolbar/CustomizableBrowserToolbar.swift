@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ToolbarItemIdentifier: String {
-  case backButton, forwardButton, urlSearchBar
+  case urlSearchBar, backButton, forwardButton, refreshButton
 }
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
@@ -16,11 +16,14 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   @Environment(\.windowProperties) private var windowProperties
   
   var body: some CustomizableToolbarContent {
-    spacer
     backButton
-    urlSearchBarTextField
     forwardButton
+    
     spacer
+    urlSearchBarTextField
+    spacer
+    
+    refreshButton
   }
   
   var urlSearchBarTextField: some CustomizableToolbarContent {
@@ -46,6 +49,18 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
       ToolbarSymbolButton(title: "Forward", symbol: .forward, action: manager.goForward)
         .disabled(!canGoForward)
         .animateOnChange(of: manager.canGoForward, with: $canGoForward)
+    }
+  }
+  
+  @State private var canRefresh = false
+  var refreshButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.refreshButton.id, placement: .automatic) {
+      ToolbarSymbolButton(title: "Refresh", symbol: .refresh, action: manager.refresh)
+        .disabled(!canRefresh)
+        .animateOnChange(of: manager.urlString != nil, with: $canRefresh)
+        .onLongPressGesture(perform: {
+          manager.forceRefresh()
+        })
     }
   }
   

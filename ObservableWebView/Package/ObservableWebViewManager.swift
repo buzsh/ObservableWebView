@@ -31,6 +31,14 @@ class ObservableWebViewManager {
     webView.goForward()
   }
   
+  func refresh() {
+    webView.reload()
+  }
+  
+  func forceRefresh() {
+    webView.reloadFromOrigin()
+  }
+  
   init(urlString: String? = nil) {
     self.webView = WKWebView()
     self.urlString = urlString
