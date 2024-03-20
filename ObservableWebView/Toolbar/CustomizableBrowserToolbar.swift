@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ToolbarItemIdentifier: String {
-  case urlSearchBar, backButton, forwardButton, refreshButton
+  case spacer, urlSearchBar, backButton, forwardButton, refreshButton
 }
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
@@ -18,11 +18,9 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   var body: some CustomizableToolbarContent {
     backButton
     forwardButton
-    
     spacer
     urlSearchBarTextField
     spacer
-    
     refreshButton
   }
   
@@ -65,7 +63,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   }
   
   var spacer: some CustomizableToolbarContent {
-    ToolbarItem(id: "spacer", placement: .automatic) {
+    ToolbarItem(id: ToolbarItemIdentifier.spacer.id, placement: .automatic) {
       Spacer()
     }
   }

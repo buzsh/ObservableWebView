@@ -128,59 +128,11 @@ extension ObservableWebViewCoordinator {
   
 extension ObservableWebViewCoordinator {
   private func fetchFavicon() {
-    let faviconScript = """
-      (function() {
-          var links = document.getElementsByTagName('link');
-          var icons = Array.from(links).filter(function(link) {
-              return link.getAttribute('rel') === 'icon' || link.getAttribute('rel').includes('icon');
-          });
-          return icons.length > 0 ? icons[0].href : '';
-      })();
-      """
+    let faviconService = ObservableFaviconService(webView: observableWebView.manager.webView)
     
-    Task {
-      let result = await executeJavaScript(faviconScript)
-      switch result {
-      case .success(let url):
-        if let urlString = url as? String, let faviconUrl = URL(string: urlString) {
-          let faviconImage = await downloadAndCacheFavicon(from: faviconUrl)
-          await MainActor.run {
-            self.observableWebView.manager.favicon = faviconImage
-          }
-        } else {
-          await MainActor.run {
-            self.observableWebView.manager.favicon = nil
-          }
-        }
-      case .failure:
-        await MainActor.run {
-          self.observableWebView.manager.favicon = nil
-        }
-      }
+    faviconService.fetchFavicon { [weak self] image in
+      self?.observableWebView.manager.favicon = image
     }
-  }
-  
-  
-}
-
-extension ObservableWebViewCoordinator {
-  func downloadAndCacheFavicon(from url: URL) async -> Image? {
-    do {
-      let (data, _) = try await URLSession.shared.data(from: url)
-
-      #if os(iOS)
-      if let uiImage = UIImage(data: data) {
-        return Image(uiImage: uiImage)
-      }
-      #elseif os(macOS)
-      if let nsImage = NSImage(data: data) {
-        return Image(nsImage: nsImage)
-      }
-      #endif
-    } catch {
-      print("Error downloading favicon: \(error)")
-    }
-    return nil
   }
 }
 
