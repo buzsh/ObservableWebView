@@ -119,10 +119,9 @@ struct UrlSearchBarTextField: View {
 }
 
 
-#Preview {
+#Preview("ContentView") {
   ContentView()
-    .frame(width: 600, height: 600)
-    .navigationTitle("")
+    .frame(width: 400, height: 600)
 }
 
 
