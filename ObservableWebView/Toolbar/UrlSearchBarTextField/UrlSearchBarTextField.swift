@@ -82,7 +82,7 @@ struct UrlSearchBarTextField: View {
           
           Spacer()
         }
-        .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor, isEditing: isEditing)
+        .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor)
       }
       
       ProgressView(value: manager.progress, total: 100)
@@ -168,7 +168,7 @@ struct UrlBarStyleModifier: ViewModifier {
 }
 
 extension View {
-  func urlBarStyle(width: CGFloat, themeColor: Color, isEditing: Bool) -> some View {
+  func urlBarStyle(width: CGFloat, themeColor: Color, isEditing: Bool = false) -> some View {
     self.modifier(UrlBarStyleModifier(width: width, themeColor: themeColor, isEditing: isEditing))
   }
 }
