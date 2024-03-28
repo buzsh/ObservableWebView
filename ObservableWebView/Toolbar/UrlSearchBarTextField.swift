@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+extension WindowProperties {
+  var urlSearchBarWidth: CGFloat {
+    return calculateUrlSearchBarWidth()
+  }
+  
+  private func calculateUrlSearchBarWidth() -> CGFloat {
+    let minWidth: CGFloat = 240
+    let maxWidth: CGFloat = 800
+    let adaptiveWidth = width * 0.4
+    
+    return min(maxWidth, max(minWidth, adaptiveWidth))
+  }
+}
+
 struct UrlSearchBarTextField: View {
   @Environment(\.windowProperties) private var windowProperties
   let manager: ObservableWebViewManager
@@ -14,7 +28,7 @@ struct UrlSearchBarTextField: View {
   @State private var showTextField: Bool = false
   
   var body: some View {
-    ZStack {
+    ZStack(alignment: .bottom) {
       if showTextField {
         HStack {
           
@@ -58,11 +72,6 @@ struct UrlSearchBarTextField: View {
               .resizable()
               .foregroundColor(.secondary)
               .frame(width: 18, height: 18)
-          } else {
-            /*
-            Image(systemName: "globe")
-              .foregroundColor(.secondary)
-             */
           }
           
           Text(prettyUrl(from: manager.urlString))
@@ -72,6 +81,13 @@ struct UrlSearchBarTextField: View {
         }
         .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
       }
+      
+      ProgressView(value: manager.progress, total: 100)
+        .progressViewStyle(.linear)
+        .frame(height: 2)
+        .frame(width: windowProperties.urlSearchBarWidth)
+        .opacity(manager.loadState == .isLoading ? 1 : 0)
+        .padding(.top)
     }
     .foregroundStyle(.primary)
     .font(.system(size: 14, weight: .regular, design: .rounded))
@@ -83,6 +99,10 @@ struct UrlSearchBarTextField: View {
         text = manager.urlString ?? ""
       }
     }
+    .mask(
+      RoundedRectangle(cornerRadius: 8)
+        .frame(width: windowProperties.urlSearchBarWidth)
+    )
   }
   
   func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
@@ -95,6 +115,14 @@ struct UrlSearchBarTextField: View {
       return ""
     }
     return host.replacingOccurrences(of: "www.", with: "")
+  }
+  
+  private func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
+    let minWidth: CGFloat = 240
+    let maxWidth: CGFloat = 800
+    let adaptiveWidth = availableWidth * 0.4
+    
+    return min(maxWidth, max(minWidth, adaptiveWidth))
   }
 }
 
