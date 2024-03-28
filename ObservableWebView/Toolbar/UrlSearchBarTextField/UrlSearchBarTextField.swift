@@ -56,7 +56,7 @@ struct UrlSearchBarTextField: View {
               }
           }
         }
-        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.urlSearchBarWidth)
+        .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor, isEditing: isEditing)
         
       } else {
         HStack {
@@ -82,7 +82,7 @@ struct UrlSearchBarTextField: View {
           
           Spacer()
         }
-        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.urlSearchBarWidth)
+        .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor, isEditing: isEditing)
       }
       
       ProgressView(value: manager.progress, total: 100)
@@ -135,8 +135,9 @@ struct UrlSearchBarTextField: View {
 
 
 struct UrlBarStyleModifier: ViewModifier {
+  let width: CGFloat
   let themeColor: Color
-  var width: CGFloat
+  let isEditing: Bool
   @State private var borderColor: Color = .secondary.opacity(0.3)
   
   func body(content: Content) -> some View {
@@ -154,6 +155,9 @@ struct UrlBarStyleModifier: ViewModifier {
       .onChange(of: themeColor) {
         updateBorderColorWithAnimation()
       }
+      .onChange(of: isEditing) {
+        
+      }
   }
   
   private func updateBorderColorWithAnimation() {
@@ -164,8 +168,8 @@ struct UrlBarStyleModifier: ViewModifier {
 }
 
 extension View {
-  func urlBarStyle(themeColor: Color, width: CGFloat) -> some View {
-    self.modifier(UrlBarStyleModifier(themeColor: themeColor, width: width))
+  func urlBarStyle(width: CGFloat, themeColor: Color, isEditing: Bool) -> some View {
+    self.modifier(UrlBarStyleModifier(width: width, themeColor: themeColor, isEditing: isEditing))
   }
 }
 
