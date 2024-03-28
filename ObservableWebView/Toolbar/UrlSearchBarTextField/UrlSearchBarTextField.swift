@@ -26,6 +26,7 @@ struct UrlSearchBarTextField: View {
   let manager: ObservableWebViewManager
   @State private var text: String = ""
   @State private var showTextField: Bool = false
+  @State private var progressBarColor: Color = .accentColor
   
   var body: some View {
     ZStack(alignment: .bottom) {
@@ -83,7 +84,7 @@ struct UrlSearchBarTextField: View {
       }
       
       ProgressView(value: manager.progress, total: 100)
-        .progressViewStyle(LinearTransparentProgressViewStyle(tintColor: .accentColor, horizontalPadding: 5))
+        .progressViewStyle(LinearTransparentProgressViewStyle(tintColor: progressBarColor, horizontalPadding: 5))
         .frame(height: 2)
         .frame(width: windowProperties.urlSearchBarWidth)
         .opacity(manager.loadState == .isLoading ? 1 : 0)
@@ -98,6 +99,9 @@ struct UrlSearchBarTextField: View {
       if showTextField {
         text = manager.urlString ?? ""
       }
+    }
+    .onChange(of: manager.themeColor) {
+      progressBarColor = manager.themeColor == .clear ? .accentColor : .primary
     }
     .mask(
       RoundedRectangle(cornerRadius: 8)
