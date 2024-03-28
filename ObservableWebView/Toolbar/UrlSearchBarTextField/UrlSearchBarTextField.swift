@@ -26,7 +26,6 @@ struct UrlSearchBarTextField: View {
   let manager: ObservableWebViewManager
   @State private var text: String = ""
   @State private var isEditing: Bool = false
-  
   @State private var showTextField: Bool = false
   @State private var progressBarColor: Color = .accentColor
   
@@ -45,10 +44,6 @@ struct UrlSearchBarTextField: View {
             manager.load(text)
           }
           .textFieldStyle(.plain)
-          .onAppear {
-            print("onAppear")
-            // selectAllText
-          }
           
           if !text.isEmpty {
             Image(systemName: "xmark.circle.fill")
@@ -107,9 +102,6 @@ struct UrlSearchBarTextField: View {
     }
     .onChange(of: manager.themeColor) {
       progressBarColor = manager.themeColor == .clear ? .accentColor : .primary
-    }
-    .onChange(of: isEditing) {
-      print("isEditing: \(isEditing)")
     }
     .mask(
       RoundedRectangle(cornerRadius: 8)
@@ -252,6 +244,7 @@ struct HighlightTextField: NSViewRepresentable {
 
 class CustomTextField: NSTextField {
   var onEditingChanged: ((Bool) -> Void)?
+  private var shouldAttemptToFocus = true
   
   override func becomeFirstResponder() -> Bool {
     let becomeFirstResponder = super.becomeFirstResponder()
@@ -283,6 +276,14 @@ class CustomTextField: NSTextField {
   override func mouseDown(with event: NSEvent) {
     if let textEditor = currentEditor() {
       textEditor.selectAll(self)
+    }
+  }
+  
+  override func viewDidMoveToWindow() {
+    super.viewDidMoveToWindow()
+    if shouldAttemptToFocus, self.window != nil {
+      self.window?.makeFirstResponder(self)
+      shouldAttemptToFocus = false
     }
   }
 }
