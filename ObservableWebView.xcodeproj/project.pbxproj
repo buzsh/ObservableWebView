@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */; };
 		2934D9B92BB6110D003BFF66 /* UrlSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9B82BB6110D003BFF66 /* UrlSearchBar.swift */; };
+		2934D9BB2BB61C4B003BFF66 /* UrlBarStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9BA2BB61C4B003BFF66 /* UrlBarStyleModifier.swift */; };
+		2934D9BD2BB61CBA003BFF66 /* WindowPropertiesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9BC2BB61CBA003BFF66 /* WindowPropertiesExtension.swift */; };
 		29A079D92BA49C79006B9A80 /* ObservableWebViewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */; };
 		29A079DB2BA49C79006B9A80 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A079DA2BA49C79006B9A80 /* ContentView.swift */; };
 		29A079DD2BA49C7A006B9A80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A079DC2BA49C7A006B9A80 /* Assets.xcassets */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewStyles.swift; sourceTree = "<group>"; };
 		2934D9B82BB6110D003BFF66 /* UrlSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSearchBar.swift; sourceTree = "<group>"; };
+		2934D9BA2BB61C4B003BFF66 /* UrlBarStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBarStyleModifier.swift; sourceTree = "<group>"; };
+		2934D9BC2BB61CBA003BFF66 /* WindowPropertiesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowPropertiesExtension.swift; sourceTree = "<group>"; };
 		29A079D52BA49C79006B9A80 /* ObservableWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObservableWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewApp.swift; sourceTree = "<group>"; };
 		29A079DA2BA49C79006B9A80 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,8 +69,10 @@
 		2934D9B72BB5EB9C003BFF66 /* UrlSearchBar */ = {
 			isa = PBXGroup;
 			children = (
+				2934D9BA2BB61C4B003BFF66 /* UrlBarStyleModifier.swift */,
 				2934D9B82BB6110D003BFF66 /* UrlSearchBar.swift */,
 				29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */,
+				2934D9BC2BB61CBA003BFF66 /* WindowPropertiesExtension.swift */,
 				2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */,
 			);
 			path = UrlSearchBar;
@@ -249,6 +255,7 @@
 			files = (
 				29CF6F642BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift in Sources */,
 				29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */,
+				2934D9BB2BB61C4B003BFF66 /* UrlBarStyleModifier.swift in Sources */,
 				29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */,
 				29A448862BAA7E3800858472 /* ObservableFaviconService.swift in Sources */,
 				29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */,
@@ -258,6 +265,7 @@
 				29A079DB2BA49C79006B9A80 /* ContentView.swift in Sources */,
 				29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */,
 				29C1098B2BA4E4BA00F88BBD /* PlatformColor.swift in Sources */,
+				2934D9BD2BB61CBA003BFF66 /* WindowPropertiesExtension.swift in Sources */,
 				2934D9B92BB6110D003BFF66 /* UrlSearchBar.swift in Sources */,
 				29C109912BA4E8CB00F88BBD /* SymbolButtons.swift in Sources */,
 				29CF6F622BAA13E800C4E482 /* UrlSearchBarTextField.swift in Sources */,
