@@ -9,7 +9,7 @@ import SwiftUI
 
 extension WindowProperties {
   var urlSearchBarWidth: CGFloat {
-    return calculateUrlSearchBarWidth()
+    calculateUrlSearchBarWidth()
   }
   
   private func calculateUrlSearchBarWidth() -> CGFloat {
@@ -37,7 +37,7 @@ struct UrlSearchBarTextField: View {
             .onTapGesture {
               showTextField = false
             }
-           
+          
           TextField("Search or type URL", text: $text)
             .textFieldStyle(.plain)
             .onSubmit {
@@ -83,7 +83,7 @@ struct UrlSearchBarTextField: View {
       }
       
       ProgressView(value: manager.progress, total: 100)
-        .progressViewStyle(.linear)
+        .progressViewStyle(TransparentBackgroundProgressViewStyle())
         .frame(height: 2)
         .frame(width: windowProperties.urlSearchBarWidth)
         .opacity(manager.loadState == .isLoading ? 1 : 0)
@@ -158,5 +158,19 @@ struct UrlBarStyleModifier: ViewModifier {
 extension View {
   func urlBarStyle(themeColor: Color, width: CGFloat) -> some View {
     self.modifier(UrlBarStyleModifier(themeColor: themeColor, width: width))
+  }
+}
+
+struct TransparentBackgroundProgressViewStyle: ProgressViewStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    GeometryReader { geometry in
+      ZStack(alignment: .bottomLeading) {
+        RoundedRectangle(cornerRadius: 8.0)
+          .fill(Color.accentColor)
+          .frame(width: geometry.size.width * CGFloat(configuration.fractionCompleted ?? 0), height: 2)
+          .animation(.linear, value: configuration.fractionCompleted ?? 0)
+      }
+      .frame(width: geometry.size.width, height: 2)
+    }
   }
 }
