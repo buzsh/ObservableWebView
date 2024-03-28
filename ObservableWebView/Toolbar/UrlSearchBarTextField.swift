@@ -53,7 +53,7 @@ struct UrlSearchBarTextField: View {
               }
           }
         }
-        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.urlSearchBarWidth)
         
       } else {
         HStack {
@@ -79,7 +79,7 @@ struct UrlSearchBarTextField: View {
           
           Spacer()
         }
-        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.urlSearchBarWidth)
       }
       
       ProgressView(value: manager.progress, total: 100)
@@ -116,14 +116,6 @@ struct UrlSearchBarTextField: View {
     }
     return host.replacingOccurrences(of: "www.", with: "")
   }
-  
-  private func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
-    let minWidth: CGFloat = 240
-    let maxWidth: CGFloat = 800
-    let adaptiveWidth = availableWidth * 0.4
-    
-    return min(maxWidth, max(minWidth, adaptiveWidth))
-  }
 }
 
 
@@ -145,9 +137,9 @@ struct UrlBarStyleModifier: ViewModifier {
       .overlay(
         RoundedRectangle(cornerRadius: 8)
           .stroke(borderColor, lineWidth: 1)
-          .frame(width: calculateUrlSearchBarWidth(for: width))
+          .frame(width: width)
       )
-      .frame(width: calculateUrlSearchBarWidth(for: width))
+      .frame(width: width)
       .onAppear {
         updateBorderColorWithAnimation()
       }
@@ -160,14 +152,6 @@ struct UrlBarStyleModifier: ViewModifier {
     withAnimation {
       borderColor = themeColor == .clear ? .secondary.opacity(0.3) : .secondary
     }
-  }
-  
-  private func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
-    let minWidth: CGFloat = 240
-    let maxWidth: CGFloat = 800
-    let adaptiveWidth = availableWidth * 0.4
-    
-    return min(maxWidth, max(minWidth, adaptiveWidth))
   }
 }
 
