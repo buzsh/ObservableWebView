@@ -83,11 +83,12 @@ struct UrlSearchBarTextField: View {
       }
       
       ProgressView(value: manager.progress, total: 100)
-        .progressViewStyle(TransparentBackgroundProgressViewStyle())
+        .progressViewStyle(LinearTransparentProgressViewStyle())
         .frame(height: 2)
-        .frame(width: windowProperties.urlSearchBarWidth)
+        .frame(width: windowProperties.urlSearchBarWidth - 12)
         .opacity(manager.loadState == .isLoading ? 1 : 0)
         .padding(.top)
+        .padding(.horizontal, 6)
     }
     .foregroundStyle(.primary)
     .font(.system(size: 14, weight: .regular, design: .rounded))
@@ -158,19 +159,5 @@ struct UrlBarStyleModifier: ViewModifier {
 extension View {
   func urlBarStyle(themeColor: Color, width: CGFloat) -> some View {
     self.modifier(UrlBarStyleModifier(themeColor: themeColor, width: width))
-  }
-}
-
-struct TransparentBackgroundProgressViewStyle: ProgressViewStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    GeometryReader { geometry in
-      ZStack(alignment: .bottomLeading) {
-        RoundedRectangle(cornerRadius: 8.0)
-          .fill(Color.accentColor)
-          .frame(width: geometry.size.width * CGFloat(configuration.fractionCompleted ?? 0), height: 2)
-          .animation(.linear, value: configuration.fractionCompleted ?? 0)
-      }
-      .frame(width: geometry.size.width, height: 2)
-    }
   }
 }
