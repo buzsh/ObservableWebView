@@ -133,7 +133,7 @@ struct UrlBarStyleModifier: ViewModifier {
   let width: CGFloat
   let themeColor: Color
   let isEditing: Bool
-  @State private var borderColor: Color = .secondary.opacity(0.3)
+  @State private var borderColor: Color = .secondary.opacity(0.5)
   @State private var borderWidth: CGFloat = 1
   
   func body(content: Content) -> some View {
@@ -159,11 +159,11 @@ struct UrlBarStyleModifier: ViewModifier {
   private func updateBorderColorWithAnimation() {
     withAnimation {
       if isEditing {
-        borderColor = themeColor == .clear ? .accentColor : .primary
         borderWidth = 3
+        borderColor = themeColor == .clear ? .accentColor : .primary
       } else {
-        borderColor = themeColor == .clear ? .secondary.opacity(0.3) : .secondary
         borderWidth = 1
+        borderColor = themeColor == .clear ? .secondary.opacity(0.5) : .secondary
       }
     }
   }
