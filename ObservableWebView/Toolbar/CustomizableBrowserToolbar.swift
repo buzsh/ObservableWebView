@@ -28,7 +28,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   
   var urlSearchBarTextField: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.urlSearchBar.id, placement: .automatic) {
-      UrlSearchBarTextField(manager: manager)
+      UrlSearchBar(manager: manager)
         .frame(width: calculateUrlSearchBarWidth(for: windowProperties.width))
     }
     .customizationBehavior(.reorderable)

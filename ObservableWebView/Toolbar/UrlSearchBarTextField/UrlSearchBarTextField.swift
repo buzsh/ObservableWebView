@@ -21,7 +21,7 @@ extension WindowProperties {
   }
 }
 
-struct UrlSearchBarTextField: View {
+struct UrlSearchBar: View {
   @Environment(\.windowProperties) private var windowProperties
   let manager: ObservableWebViewManager
   @State private var text: String = ""
@@ -40,7 +40,7 @@ struct UrlSearchBarTextField: View {
               showTextField = false
             }
           
-          HighlightTextField(text: $text, isEditing: $isEditing) {
+          UrlSearchBarTextField(text: $text, isEditing: $isEditing) {
             manager.load(text)
           }
           .textFieldStyle(.plain)
@@ -177,7 +177,7 @@ extension View {
 
 import AppKit
 
-struct HighlightTextField: NSViewRepresentable {
+struct UrlSearchBarTextField: NSViewRepresentable {
   @Binding var text: String
   @Binding var isEditing: Bool
   var onSubmit: (() -> Void)?
@@ -206,7 +206,7 @@ struct HighlightTextField: NSViewRepresentable {
   }
   
   class Coordinator: NSObject, NSTextFieldDelegate {
-    var parent: HighlightTextField
+    var parent: UrlSearchBarTextField
     var onSubmit: (() -> Void)?
     
     var isEditing: Bool = false {
@@ -217,7 +217,7 @@ struct HighlightTextField: NSViewRepresentable {
       }
     }
     
-    init(_ textField: HighlightTextField) {
+    init(_ textField: UrlSearchBarTextField) {
       self.parent = textField
     }
     
