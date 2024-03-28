@@ -90,8 +90,6 @@ extension UrlSearchBar {
     .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor)
     .foregroundColor(.secondary)
   }
-  
-  
 }
 
 // MARK: - UrlSearchBarTextField
