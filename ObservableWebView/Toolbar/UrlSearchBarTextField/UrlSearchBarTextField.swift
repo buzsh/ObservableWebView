@@ -41,11 +41,14 @@ struct UrlSearchBarTextField: View {
               showTextField = false
             }
           
-          HighlightTextField(text: $text, isEditing: $isEditing)
-            .textFieldStyle(.plain)
-            .onSubmit {
-              manager.load(text)
-            }
+          HighlightTextField(text: $text, isEditing: $isEditing) {
+            manager.load(text)
+          }
+          .textFieldStyle(.plain)
+          .onAppear {
+            print("onAppear")
+            // selectAllText
+          }
           
           if !text.isEmpty {
             Image(systemName: "xmark.circle.fill")
@@ -139,13 +142,14 @@ struct UrlBarStyleModifier: ViewModifier {
   let themeColor: Color
   let isEditing: Bool
   @State private var borderColor: Color = .secondary.opacity(0.3)
+  @State private var borderWidth: CGFloat = 1
   
   func body(content: Content) -> some View {
     content
       .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
       .overlay(
         RoundedRectangle(cornerRadius: 8)
-          .stroke(borderColor, lineWidth: 1)
+          .stroke(borderColor, lineWidth: borderWidth)
           .frame(width: width)
       )
       .frame(width: width)
@@ -156,13 +160,19 @@ struct UrlBarStyleModifier: ViewModifier {
         updateBorderColorWithAnimation()
       }
       .onChange(of: isEditing) {
-        
+        updateBorderColorWithAnimation()
       }
   }
   
   private func updateBorderColorWithAnimation() {
     withAnimation {
-      borderColor = themeColor == .clear ? .secondary.opacity(0.3) : .secondary
+      if isEditing {
+        borderColor = themeColor == .clear ? .accentColor : .primary
+        borderWidth = 3
+      } else {
+        borderColor = themeColor == .clear ? .secondary.opacity(0.3) : .secondary
+        borderWidth = 1
+      }
     }
   }
 }
@@ -178,6 +188,7 @@ import AppKit
 struct HighlightTextField: NSViewRepresentable {
   @Binding var text: String
   @Binding var isEditing: Bool
+  var onSubmit: (() -> Void)?
   
   func makeCoordinator() -> Coordinator {
     Coordinator(self)
@@ -185,10 +196,11 @@ struct HighlightTextField: NSViewRepresentable {
   
   func makeNSView(context: Context) -> CustomTextField {
     let textField = CustomTextField()
-            textField.delegate = context.coordinator
-            textField.onEditingChanged = { editing in
-                context.coordinator.isEditing = editing
-            }
+    textField.delegate = context.coordinator
+    textField.onEditingChanged = { editing in
+      context.coordinator.isEditing = editing
+    }
+    context.coordinator.onSubmit = onSubmit
     textField.isBordered = false
     textField.drawsBackground = false
     textField.focusRingType = .none
@@ -203,6 +215,7 @@ struct HighlightTextField: NSViewRepresentable {
   
   class Coordinator: NSObject, NSTextFieldDelegate {
     var parent: HighlightTextField
+    var onSubmit: (() -> Void)?
     
     var isEditing: Bool = false {
       didSet {
@@ -214,6 +227,25 @@ struct HighlightTextField: NSViewRepresentable {
     
     init(_ textField: HighlightTextField) {
       self.parent = textField
+    }
+    
+    func controlTextDidChange(_ obj: Notification) {
+      if let textField = obj.object as? NSTextField {
+        DispatchQueue.main.async {
+          self.parent.text = textField.stringValue
+        }
+      }
+    }
+    
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+      if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+        if let textField = control as? NSTextField {
+          self.parent.text = textField.stringValue
+        }
+        onSubmit?()
+        return true
+      }
+      return false
     }
   }
 }
@@ -241,6 +273,7 @@ class CustomTextField: NSTextField {
     self.focusRingType = .none
     self.font = NSFont.systemFont(ofSize: 14, weight: .regular)
     self.textColor = NSColor.textColor
+    self.placeholderString = "Search or type URL"
   }
   
   required init?(coder: NSCoder) {
