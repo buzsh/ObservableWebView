@@ -15,6 +15,11 @@ struct UrlSearchBar: View {
   @State private var showTextField: Bool = false
   @State private var progressBarColor: Color = .accentColor
   
+  func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
+    showTextField = false
+    text = prettyUrl(from: manager.urlString)
+  }
+  
   var body: some View {
     ZStack(alignment: .bottom) {
       if showTextField {
@@ -91,11 +96,6 @@ extension UrlSearchBar {
 
 // MARK: - UrlSearchBarTextField
 extension UrlSearchBar {
-  func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
-    showTextField = false
-    text = prettyUrl(from: manager.urlString)
-  }
-  
   var urlSearchBarTextField: some View {
     HStack {
       SFSymbol.search.image
@@ -118,4 +118,5 @@ extension UrlSearchBar {
 #Preview("ContentView") {
   ContentView()
     .frame(width: 400, height: 600)
+    .navigationTitle("")
 }
