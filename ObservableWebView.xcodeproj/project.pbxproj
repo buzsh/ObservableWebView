@@ -62,14 +62,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2934D9B72BB5EB9C003BFF66 /* UrlSearchBarTextField */ = {
+		2934D9B72BB5EB9C003BFF66 /* UrlSearchBar */ = {
 			isa = PBXGroup;
 			children = (
 				2934D9B82BB6110D003BFF66 /* UrlSearchBar.swift */,
 				29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */,
 				2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */,
 			);
-			path = UrlSearchBarTextField;
+			path = UrlSearchBar;
 			sourceTree = "<group>";
 		};
 		29A079CC2BA49C79006B9A80 = {
@@ -172,7 +172,7 @@
 			children = (
 				29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */,
 				29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */,
-				2934D9B72BB5EB9C003BFF66 /* UrlSearchBarTextField */,
+				2934D9B72BB5EB9C003BFF66 /* UrlSearchBar */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
