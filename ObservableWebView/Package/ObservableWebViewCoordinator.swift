@@ -10,6 +10,7 @@ import WebKit
 
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var observableWebView: ObservableWebView
+  var shouldUseNonEssentialFeatures: Bool = true
   
   private var urlObservation: NSKeyValueObservation?
   private var canGoBackObservation: NSKeyValueObservation?
@@ -46,8 +47,10 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
     observableWebView.manager.loadState = .isFinished
     observableWebView.manager.updateUrlString(withUrl: webView.url)
     
-    Task { await updateWebViewContentThemeColor() }
-    fetchFavicon()
+    if observableWebView.manager.shouldUseNonEssentialFeatures {
+      Task { await updateWebViewContentThemeColor() }
+      fetchFavicon()
+    }
   }
   
   func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -95,7 +98,7 @@ extension ObservableWebViewCoordinator {
       
       if let newProgress = change.newValue {
         let roundedProgress = (newProgress * 100).roundTo(decimalPlaces: 2)
-        self.observableWebView.manager.progress = roundedProgress
+        self.observableWebView.manager.updateProgress(roundedProgress)
       }
     }
   }

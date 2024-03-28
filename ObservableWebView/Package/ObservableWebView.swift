@@ -14,6 +14,7 @@ struct ObservableWebView: View {
   
   func makeCoordinator() -> ObservableWebViewCoordinator {
     let coordinator = ObservableWebViewCoordinator(self)
+    coordinator.shouldUseNonEssentialFeatures = nonEssentialFeatures
     return coordinator
   }
 }
