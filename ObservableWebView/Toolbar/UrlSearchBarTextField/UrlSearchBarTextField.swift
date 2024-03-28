@@ -25,6 +25,8 @@ struct UrlSearchBarTextField: View {
   @Environment(\.windowProperties) private var windowProperties
   let manager: ObservableWebViewManager
   @State private var text: String = ""
+  @State private var isEditing: Bool = false
+  
   @State private var showTextField: Bool = false
   @State private var progressBarColor: Color = .accentColor
   
@@ -39,7 +41,7 @@ struct UrlSearchBarTextField: View {
               showTextField = false
             }
           
-          TextField("Search or type URL", text: $text)
+          HighlightTextField(text: $text, isEditing: $isEditing)
             .textFieldStyle(.plain)
             .onSubmit {
               manager.load(text)
@@ -103,6 +105,9 @@ struct UrlSearchBarTextField: View {
     .onChange(of: manager.themeColor) {
       progressBarColor = manager.themeColor == .clear ? .accentColor : .primary
     }
+    .onChange(of: isEditing) {
+      print("isEditing: \(isEditing)")
+    }
     .mask(
       RoundedRectangle(cornerRadius: 8)
         .frame(width: windowProperties.urlSearchBarWidth)
@@ -161,5 +166,86 @@ struct UrlBarStyleModifier: ViewModifier {
 extension View {
   func urlBarStyle(themeColor: Color, width: CGFloat) -> some View {
     self.modifier(UrlBarStyleModifier(themeColor: themeColor, width: width))
+  }
+}
+
+import AppKit
+
+struct HighlightTextField: NSViewRepresentable {
+  @Binding var text: String
+  @Binding var isEditing: Bool
+  
+  func makeCoordinator() -> Coordinator {
+    Coordinator(self)
+  }
+  
+  func makeNSView(context: Context) -> CustomTextField {
+    let textField = CustomTextField()
+            textField.delegate = context.coordinator
+            textField.onEditingChanged = { editing in
+                context.coordinator.isEditing = editing
+            }
+    textField.isBordered = false
+    textField.drawsBackground = false
+    textField.focusRingType = .none
+    textField.font = NSFont.systemFont(ofSize: 14, weight: .regular)
+    textField.textColor = NSColor.textColor
+    return textField
+  }
+  
+  func updateNSView(_ textField: CustomTextField, context: Context) {
+    textField.stringValue = text
+  }
+  
+  class Coordinator: NSObject, NSTextFieldDelegate {
+    var parent: HighlightTextField
+    
+    var isEditing: Bool = false {
+      didSet {
+        DispatchQueue.main.async {
+          self.parent.isEditing = self.isEditing
+        }
+      }
+    }
+    
+    init(_ textField: HighlightTextField) {
+      self.parent = textField
+    }
+  }
+}
+
+class CustomTextField: NSTextField {
+  var onEditingChanged: ((Bool) -> Void)?
+  
+  override func becomeFirstResponder() -> Bool {
+    let becomeFirstResponder = super.becomeFirstResponder()
+    if becomeFirstResponder {
+      onEditingChanged?(true)
+    }
+    return becomeFirstResponder
+  }
+  
+  override func textDidEndEditing(_ notification: Notification) {
+    super.textDidEndEditing(notification)
+    onEditingChanged?(false)
+  }
+  
+  override init(frame frameRect: NSRect) {
+    super.init(frame: frameRect)
+    self.isBordered = false
+    self.drawsBackground = false
+    self.focusRingType = .none
+    self.font = NSFont.systemFont(ofSize: 14, weight: .regular)
+    self.textColor = NSColor.textColor
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func mouseDown(with event: NSEvent) {
+    if let textEditor = currentEditor() {
+      textEditor.selectAll(self)
+    }
   }
 }
