@@ -41,9 +41,12 @@ struct UrlSearchBar: View {
             }
           
           UrlSearchBarTextField(text: $text, isEditing: $isEditing) {
-            manager.load(text)
+            if text.isEmpty {
+              showTextField = false
+            } else {
+              manager.load(text)
+            }
           }
-          .textFieldStyle(.plain)
           
           if !text.isEmpty {
             Image(systemName: "xmark.circle.fill")
