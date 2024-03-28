@@ -159,7 +159,7 @@ struct UrlBarStyleModifier: ViewModifier {
   private func updateBorderColorWithAnimation() {
     withAnimation {
       if isEditing {
-        borderWidth = 3
+        borderWidth = 4
         borderColor = themeColor == .clear ? .accentColor : .primary
       } else {
         borderWidth = 1
