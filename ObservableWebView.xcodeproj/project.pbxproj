@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */; };
 		29A079D92BA49C79006B9A80 /* ObservableWebViewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */; };
 		29A079DB2BA49C79006B9A80 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A079DA2BA49C79006B9A80 /* ContentView.swift */; };
 		29A079DD2BA49C7A006B9A80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A079DC2BA49C7A006B9A80 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewStyles.swift; sourceTree = "<group>"; };
 		29A079D52BA49C79006B9A80 /* ObservableWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObservableWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewApp.swift; sourceTree = "<group>"; };
 		29A079DA2BA49C79006B9A80 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */,
 				29CF6F5E2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift */,
 				29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */,
+				2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				29C109912BA4E8CB00F88BBD /* SymbolButtons.swift in Sources */,
 				29CF6F622BAA13E800C4E482 /* UrlSearchBarTextField.swift in Sources */,
 				29A079D92BA49C79006B9A80 /* ObservableWebViewApp.swift in Sources */,
+				2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
