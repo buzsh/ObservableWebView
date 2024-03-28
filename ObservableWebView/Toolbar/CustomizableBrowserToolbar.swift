@@ -28,8 +28,8 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   
   var urlSearchBarTextField: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.urlSearchBar.id, placement: .automatic) {
-      UrlSearchBarTextField(manager: manager)
-        .frame(width: calculateUrlSearchBarWidth(for: windowProperties.width))
+      UrlSearchBar(manager: manager)
+        .frame(width: windowProperties.urlSearchBarWidth)
     }
     .customizationBehavior(.reorderable)
   }
@@ -89,19 +89,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   }
 }
 
-
 #Preview {
   ContentView()
     .frame(width: 400, height: 600)
-}
-
-
-extension CustomizableBrowserToolbar {
-  fileprivate func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
-    let minWidth: CGFloat = 240
-    let maxWidth: CGFloat = 800
-    let adaptiveWidth = availableWidth * 0.4
-    
-    return min(maxWidth, max(minWidth, adaptiveWidth))
-  }
 }
