@@ -19,6 +19,11 @@ enum SFSymbol: String {
   case bonjour
   case trash
   case lock
+  case star
+  
+  case solidLock = "lock.fill"
+  case solidLockSlash = "lock.slash.fill"
+  case search = "magnifyingglass"
   
   case folder
   
