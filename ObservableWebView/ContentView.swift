@@ -33,13 +33,13 @@ struct ContentView: View {
         
         HStack {
           Spacer()
-          Button("Load Wikipedia") {
+          Button("Wikipedia") {
             webViewManager.load("https://www.wikipedia.org")
           }
-          Button("Load Apple") {
+          Button("Apple") {
             webViewManager.load("https://apple.com")
           }
-          Button("Theme Site") {
+          Button("Site with Theme") {
             webViewManager.load("https://scinfu.github.io/SwiftSoup/")
           }
           Spacer()

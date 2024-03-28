@@ -7,14 +7,29 @@
 
 import SwiftUI
 
+extension WindowProperties {
+  var urlSearchBarWidth: CGFloat {
+    calculateUrlSearchBarWidth()
+  }
+  
+  private func calculateUrlSearchBarWidth() -> CGFloat {
+    let minWidth: CGFloat = 240
+    let maxWidth: CGFloat = 800
+    let adaptiveWidth = width * 0.4
+    
+    return min(maxWidth, max(minWidth, adaptiveWidth))
+  }
+}
+
 struct UrlSearchBarTextField: View {
   @Environment(\.windowProperties) private var windowProperties
   let manager: ObservableWebViewManager
   @State private var text: String = ""
   @State private var showTextField: Bool = false
+  @State private var progressBarColor: Color = .accentColor
   
   var body: some View {
-    ZStack {
+    ZStack(alignment: .bottom) {
       if showTextField {
         HStack {
           
@@ -23,7 +38,7 @@ struct UrlSearchBarTextField: View {
             .onTapGesture {
               showTextField = false
             }
-           
+          
           TextField("Search or type URL", text: $text)
             .textFieldStyle(.plain)
             .onSubmit {
@@ -39,7 +54,7 @@ struct UrlSearchBarTextField: View {
               }
           }
         }
-        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.urlSearchBarWidth)
         
       } else {
         HStack {
@@ -58,11 +73,6 @@ struct UrlSearchBarTextField: View {
               .resizable()
               .foregroundColor(.secondary)
               .frame(width: 18, height: 18)
-          } else {
-            /*
-            Image(systemName: "globe")
-              .foregroundColor(.secondary)
-             */
           }
           
           Text(prettyUrl(from: manager.urlString))
@@ -70,8 +80,15 @@ struct UrlSearchBarTextField: View {
           
           Spacer()
         }
-        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.width)
+        .urlBarStyle(themeColor: manager.themeColor, width: windowProperties.urlSearchBarWidth)
       }
+      
+      ProgressView(value: manager.progress, total: 100)
+        .progressViewStyle(LinearTransparentProgressViewStyle(tintColor: progressBarColor, horizontalPadding: 5))
+        .frame(height: 2)
+        .frame(width: windowProperties.urlSearchBarWidth)
+        .opacity(manager.loadState == .isLoading ? 1 : 0)
+        .padding(.top)
     }
     .foregroundStyle(.primary)
     .font(.system(size: 14, weight: .regular, design: .rounded))
@@ -83,6 +100,13 @@ struct UrlSearchBarTextField: View {
         text = manager.urlString ?? ""
       }
     }
+    .onChange(of: manager.themeColor) {
+      progressBarColor = manager.themeColor == .clear ? .accentColor : .primary
+    }
+    .mask(
+      RoundedRectangle(cornerRadius: 8)
+        .frame(width: windowProperties.urlSearchBarWidth)
+    )
   }
   
   func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
@@ -99,10 +123,9 @@ struct UrlSearchBarTextField: View {
 }
 
 
-#Preview {
+#Preview("ContentView") {
   ContentView()
-    .frame(width: 600, height: 600)
-    .navigationTitle("")
+    .frame(width: 400, height: 600)
 }
 
 
@@ -117,9 +140,9 @@ struct UrlBarStyleModifier: ViewModifier {
       .overlay(
         RoundedRectangle(cornerRadius: 8)
           .stroke(borderColor, lineWidth: 1)
-          .frame(width: calculateUrlSearchBarWidth(for: width))
+          .frame(width: width)
       )
-      .frame(width: calculateUrlSearchBarWidth(for: width))
+      .frame(width: width)
       .onAppear {
         updateBorderColorWithAnimation()
       }
@@ -132,14 +155,6 @@ struct UrlBarStyleModifier: ViewModifier {
     withAnimation {
       borderColor = themeColor == .clear ? .secondary.opacity(0.3) : .secondary
     }
-  }
-  
-  private func calculateUrlSearchBarWidth(for availableWidth: CGFloat) -> CGFloat {
-    let minWidth: CGFloat = 240
-    let maxWidth: CGFloat = 800
-    let adaptiveWidth = availableWidth * 0.4
-    
-    return min(maxWidth, max(minWidth, adaptiveWidth))
   }
 }
 

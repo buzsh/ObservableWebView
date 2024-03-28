@@ -14,6 +14,7 @@ struct ObservableWebViewApp: App {
       ContentView()
         .environment(WindowProperties())
     }
+    .windowStyle(.hiddenTitleBar)
     .windowToolbarStyle(.unified(showsTitle: false))
     .commands {
       ToolbarCommands()
