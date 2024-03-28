@@ -98,6 +98,10 @@ class CustomTextField: NSTextField {
     self.font = NSFont.systemFont(ofSize: 14, weight: .regular)
     self.textColor = NSColor.textColor
     self.placeholderString = "Search or type URL"
+    self.lineBreakMode = .byTruncatingTail
+    self.cell?.usesSingleLineMode = true
+    self.cell?.wraps = false
+    self.cell?.isScrollable = true
   }
   
   required init?(coder: NSCoder) {
