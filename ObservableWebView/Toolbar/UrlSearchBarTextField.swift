@@ -83,12 +83,11 @@ struct UrlSearchBarTextField: View {
       }
       
       ProgressView(value: manager.progress, total: 100)
-        .progressViewStyle(LinearTransparentProgressViewStyle())
+        .progressViewStyle(LinearTransparentProgressViewStyle(tintColor: .accentColor, horizontalPadding: 5))
         .frame(height: 2)
-        .frame(width: windowProperties.urlSearchBarWidth - 12)
+        .frame(width: windowProperties.urlSearchBarWidth)
         .opacity(manager.loadState == .isLoading ? 1 : 0)
         .padding(.top)
-        .padding(.horizontal, 6)
     }
     .foregroundStyle(.primary)
     .font(.system(size: 14, weight: .regular, design: .rounded))
