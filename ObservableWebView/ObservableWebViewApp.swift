@@ -11,23 +11,13 @@ import SwiftUI
 struct ObservableWebViewApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      BrowserTabView()
         .environment(WindowProperties())
     }
     .windowStyle(.hiddenTitleBar)
     .windowToolbarStyle(.unified(showsTitle: false))
     .commands {
       ToolbarCommands()
-    }
-  }
-}
-
-extension View {
-  func animateOnChange<T: Equatable>(of value: T, with state: Binding<T>) -> some View {
-    self.onChange(of: value) {
-      withAnimation {
-        state.wrappedValue = value
-      }
     }
   }
 }

@@ -27,6 +27,9 @@ enum SFSymbol: String {
   
   case folder
   
+  case tabBar = "character.textbox"
+  case tabGallery = "square.on.square"
+  
   case checkmark
   case pencil
   

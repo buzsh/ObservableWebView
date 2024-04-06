@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  WebViewContainer.swift
 //  ObservableWebView
 //
 //  Created by Justin Bush on 3/15/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
-  @State var webViewManager = ObservableWebViewManager()
+struct WebViewContainer: View {
   @Environment(\.windowProperties) private var windowProperties
+  @State private var webViewManager = ObservableWebViewManager()
   @State private var toolbarBackgroundColor: Color = .clear
   
   var body: some View {
@@ -50,10 +50,14 @@ struct ContentView: View {
       .onChange(of: geometry.size.width) {
         windowProperties.width = geometry.size.width
       }
+      .onAppear {
+        windowProperties.width = geometry.size.width
+      }
     }
     .toolbar(id: ToolbarIdentifier.editingtools.id) {
       CustomizableBrowserToolbar(manager: webViewManager)
     }
+    .navigationTitle(webViewManager.pageTitle ?? "Blank Page")
     .toolbarBackground(toolbarBackgroundColor, for: .windowToolbar)
     .animateOnChange(of: webViewManager.themeColor, with: $toolbarBackgroundColor)
   }
@@ -72,10 +76,8 @@ struct ContentView: View {
     switch newState {
     case .isLoading: 
       print("webView is loading")
-      // quick fade-in progress bar
     case .isFinished:
       print("webView is finished loading")
-      // stanadrd fade-out progress bar
     case .error(let error):
       print("webView encountered an error: \(error.localizedDescription)")
     default:
@@ -85,6 +87,6 @@ struct ContentView: View {
 }
 
 #Preview {
-  ContentView()
+  WebViewContainer()
     .frame(width: 400, height: 600)
 }

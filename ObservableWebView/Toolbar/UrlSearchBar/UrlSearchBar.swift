@@ -113,8 +113,8 @@ extension UrlSearchBar {
   }
 }
 
-#Preview("ContentView") {
-  ContentView()
+#Preview {
+  WebViewContainer()
     .frame(width: 400, height: 600)
     .navigationTitle("")
 }
