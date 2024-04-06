@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum ToolbarItemIdentifier: String {
-  case spacer, urlSearchBar, backButton, forwardButton, refreshButton, bookmarkButton, shareButton
+  case spacer, urlSearchBar, backButton, forwardButton, refreshButton, bookmarkButton, shareButton, tabBarButton, tabGalleryButton
 }
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
@@ -24,6 +24,9 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
     spacer
     bookmarkButton
     shareButton
+    tabBarButton
+      .defaultCustomization(.hidden)
+    tabGalleryButton
   }
   
   var urlSearchBarTextField: some CustomizableToolbarContent {
@@ -79,6 +82,22 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
       ToolbarSymbolButton(title: "Share", symbol: .share, action: { print("SHARE") })
         .disabled(!canShare)
         .animateOnChange(of: manager.urlString != nil, with: $canShare)
+    }
+  }
+  
+  var tabBarButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.tabBarButton.id, placement: .automatic) {
+      ToolbarSymbolButton(title: "Toggle Tabs", symbol: .tabBar, action: {
+        KeyWindow.toggleTabBar()
+      })
+    }
+  }
+  
+  var tabGalleryButton: some CustomizableToolbarContent {
+    ToolbarItem(id: ToolbarItemIdentifier.tabGalleryButton.id, placement: .automatic) {
+      ToolbarSymbolButton(title: "Tab Gallery", symbol: .tabGallery, action: {
+        KeyWindow.toggleTabOverview()
+      })
     }
   }
   
