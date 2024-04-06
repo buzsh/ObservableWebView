@@ -1,5 +1,5 @@
 # ObservableWebView
-WKWebView implementation using Swift's new @Observable
+WKWebView implementation using Swift's new [Observation framework](https://developer.apple.com/documentation/observation).
 
 <p align="center">
   <img width="1155" alt="Screenshot 2024-04-06 at 12 24 31 PM" src="https://github.com/buzsh/ObservableWebView/assets/158503966/b595c8d6-14be-4b48-8369-e18323b89c67">
