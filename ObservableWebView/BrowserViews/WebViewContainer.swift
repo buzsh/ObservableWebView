@@ -76,10 +76,8 @@ struct WebViewContainer: View {
     switch newState {
     case .isLoading: 
       print("webView is loading")
-      // quick fade-in progress bar
     case .isFinished:
       print("webView is finished loading")
-      // stanadrd fade-out progress bar
     case .error(let error):
       print("webView encountered an error: \(error.localizedDescription)")
     default:
