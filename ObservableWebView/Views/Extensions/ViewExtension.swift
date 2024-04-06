@@ -1,5 +1,5 @@
 //
-//  ViewExtensions.swift
+//  ViewExtension.swift
 //  ObservableWebView
 //
 //  Created by Justin Bush on 4/6/24.
