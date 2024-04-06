@@ -13,6 +13,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var shouldUseNonEssentialFeatures: Bool = true
   
   private var urlObservation: NSKeyValueObservation?
+  private var pageTitleObservation: NSKeyValueObservation?
   private var canGoBackObservation: NSKeyValueObservation?
   private var canGoForwardObservation: NSKeyValueObservation?
   private var progressObservation: NSKeyValueObservation?
@@ -106,6 +107,10 @@ extension ObservableWebViewCoordinator {
   private func setupNavigationObservations() {
     urlObservation = observableWebView.manager.webView.observe(\.url, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.updateUrlString(withUrl: webView.url)
+    }
+    
+    pageTitleObservation = observableWebView.manager.webView.observe(\.title, options: .new) { [weak self] webView, change in
+      self?.observableWebView.manager.pageTitle = webView.title
     }
     
     canGoBackObservation = observableWebView.manager.webView.observe(\.canGoBack, options: .new) { [weak self] webView, _ in

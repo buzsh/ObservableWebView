@@ -18,6 +18,7 @@ class ObservableWebViewManager {
   var progress: Double = 0
   /// The current URL value of the loaded WebView content as a string.
   var urlString: String?
+  var pageTitle: String?
   var canGoBack: Bool = false
   var canGoForward: Bool = false
   var isSecurePage: Bool = false
