@@ -90,6 +90,6 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
 }
 
 #Preview {
-  ContentView()
+  WebViewContainer()
     .frame(width: 400, height: 600)
 }
