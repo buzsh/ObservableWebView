@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State var webViewManager = ObservableWebViewManager()
+  @State private var webViewManager = ObservableWebViewManager()
   @Environment(\.windowProperties) private var windowProperties
   @State private var toolbarBackgroundColor: Color = .clear
   

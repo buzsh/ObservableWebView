@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290FFDFE2BC1A9AE00A695F4 /* ContentViewWorkaround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFDFD2BC1A9AE00A695F4 /* ContentViewWorkaround.swift */; };
 		2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */; };
 		2934D9B92BB6110D003BFF66 /* UrlSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9B82BB6110D003BFF66 /* UrlSearchBar.swift */; };
 		2934D9BB2BB61C4B003BFF66 /* UrlBarStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9BA2BB61C4B003BFF66 /* UrlBarStyleModifier.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		290FFDFD2BC1A9AE00A695F4 /* ContentViewWorkaround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewWorkaround.swift; sourceTree = "<group>"; };
 		2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewStyles.swift; sourceTree = "<group>"; };
 		2934D9B82BB6110D003BFF66 /* UrlSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSearchBar.swift; sourceTree = "<group>"; };
 		2934D9BA2BB61C4B003BFF66 /* UrlBarStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlBarStyleModifier.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */,
 				29CF6F652BAA156800C4E482 /* WindowProperties.swift */,
 				29A079DA2BA49C79006B9A80 /* ContentView.swift */,
+				290FFDFD2BC1A9AE00A695F4 /* ContentViewWorkaround.swift */,
 				29CF6F602BAA13BE00C4E482 /* Toolbar */,
 				29C109892BA4E4A600F88BBD /* Plugins */,
 				29C109832BA4C45500F88BBD /* Package */,
@@ -256,6 +259,7 @@
 				29CF6F642BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift in Sources */,
 				29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */,
 				2934D9BB2BB61C4B003BFF66 /* UrlBarStyleModifier.swift in Sources */,
+				290FFDFE2BC1A9AE00A695F4 /* ContentViewWorkaround.swift in Sources */,
 				29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */,
 				29A448862BAA7E3800858472 /* ObservableFaviconService.swift in Sources */,
 				29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */,

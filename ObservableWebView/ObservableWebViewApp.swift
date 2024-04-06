@@ -11,7 +11,8 @@ import SwiftUI
 struct ObservableWebViewApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      //ContentView()
+      ContentViewWorkaround()
         .environment(WindowProperties())
     }
     .windowStyle(.hiddenTitleBar)
