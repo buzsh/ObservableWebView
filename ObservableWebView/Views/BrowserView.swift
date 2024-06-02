@@ -19,11 +19,11 @@ struct BrowserView: View {
   var body: some View {
     WebViewContainer(manager: manager)
       .navigationTitle(manager.pageTitle ?? "Blank Page")
+      .themeColor(manager: manager, themeColor: $themeColor)
+      .animateToolbarBackground(color: $themeColor)
       .toolbar(id: ToolbarIdentifier.editingtools.id) {
         CustomizableBrowserToolbar(manager: manager, themeColor: themeColor)
       }
-      .themeColor(manager: manager, themeColor: $themeColor)
-      .animateToolbarBackground(color: $themeColor)
   }
   
   func webViewConfig() {
