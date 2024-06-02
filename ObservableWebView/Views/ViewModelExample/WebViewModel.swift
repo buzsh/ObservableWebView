@@ -12,6 +12,15 @@ import WebKit
 class WebViewModel: ScriptMessageHandler {
   var manager = ObservableWebViewManager()
   
+  init() {
+    manager.load("https://demo-ai-reminders.vercel.app/")
+    webViewConfig()
+  }
+  
+  func webViewConfig() {
+    manager.webView.allowsBackForwardNavigationGestures = true
+  }
+  
   func setupScriptMessageHandlers() {
     manager.addScriptMessageHandler(self, forName: "copilotMessageProcessed")
     manager.addScriptMessageHandler(self, forName: "copilotSidebarHidden")

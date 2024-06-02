@@ -14,10 +14,6 @@ struct WebViewModelContainer: View {
     VStack {
       ObservableWebView(manager: viewModel.manager)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-          viewModel.manager.webView.allowsBackForwardNavigationGestures = true
-          viewModel.manager.load("https://demo-ai-reminders.vercel.app/")
-        }
         .onChange(of: viewModel.manager.urlString) {
           observedUrlChange()
         }
