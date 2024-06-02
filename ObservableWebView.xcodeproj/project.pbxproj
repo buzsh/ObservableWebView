@@ -36,6 +36,7 @@
 		29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */; };
 		29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */; };
 		29FF78792C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */; };
+		29FF787D2C0CE2500080E353 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF787C2C0CE2500080E353 /* Delay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewManager.swift; sourceTree = "<group>"; };
 		29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebView.swift; sourceTree = "<group>"; };
 		29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScriptMessageHandlerModifier.swift; sourceTree = "<group>"; };
+		29FF787C2C0CE2500080E353 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,8 @@
 		29C109832BA4C45500F88BBD /* Package */ = {
 			isa = PBXGroup;
 			children = (
+				29FF787B2C0CE23E0080E353 /* Utilities */,
+				29FF787A2C0CE2300080E353 /* Extensions */,
 				29FF78772C0CD97B0080E353 /* Modifiers */,
 				29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */,
 				29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */,
@@ -264,6 +268,21 @@
 				29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		29FF787A2C0CE2300080E353 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		29FF787B2C0CE23E0080E353 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				29FF787C2C0CE2500080E353 /* Delay.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,6 +380,7 @@
 				29A079D92BA49C79006B9A80 /* ObservableWebViewApp.swift in Sources */,
 				290FFE022BC1BC1300A695F4 /* BrowserView.swift in Sources */,
 				290EEF3B2C0CCA9500DB2809 /* ThemeColorModifier.swift in Sources */,
+				29FF787D2C0CE2500080E353 /* Delay.swift in Sources */,
 				2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */,
 				290EEF3D2C0CD58B00DB2809 /* AnimateToolbarBackgroundColor.swift in Sources */,
 			);

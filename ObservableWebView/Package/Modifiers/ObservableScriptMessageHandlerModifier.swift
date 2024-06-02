@@ -50,28 +50,3 @@ extension View {
     self.modifier(ObservableScriptMessageHandlerModifier(name: name, handler: handler, manager: manager))
   }
 }
-
-
-extension ObservableWebViewManager {
-  func addScriptMessageHandler(_ handler: ScriptMessageHandler, forName name: String) {
-    webView.configuration.userContentController.add(WebViewScriptMessageProxy(handler: handler), name: name)
-    scriptMessageHandlers[name] = handler
-  }
-  
-  func removeScriptMessageHandler(forName name: String) {
-    webView.configuration.userContentController.removeScriptMessageHandler(forName: name)
-    scriptMessageHandlers.removeValue(forKey: name)
-  }
-}
-
-private class WebViewScriptMessageProxy: NSObject, WKScriptMessageHandler {
-  weak var handler: ScriptMessageHandler?
-  
-  init(handler: ScriptMessageHandler) {
-    self.handler = handler
-  }
-  
-  func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-    handler?.didReceiveScriptMessage(message)
-  }
-}

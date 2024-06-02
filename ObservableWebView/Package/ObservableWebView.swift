@@ -15,6 +15,10 @@ struct ObservableWebView: View {
     let coordinator = ObservableWebViewCoordinator(self)
     return coordinator
   }
+  
+  func scriptMessageHandler(_ name: String, handler: @escaping (WKScriptMessage) -> Void) -> some View {
+    self.modifier(ObservableScriptMessageHandlerModifier(name: name, handler: handler, manager: manager))
+  }
 }
 
 #if os(macOS)
