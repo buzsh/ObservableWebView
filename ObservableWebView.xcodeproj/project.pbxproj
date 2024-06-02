@@ -35,6 +35,7 @@
 		29CF6F662BAA156800C4E482 /* WindowProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F652BAA156800C4E482 /* WindowProperties.swift */; };
 		29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */; };
 		29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */; };
+		29FF78792C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		29CF6F652BAA156800C4E482 /* WindowProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowProperties.swift; sourceTree = "<group>"; };
 		29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewManager.swift; sourceTree = "<group>"; };
 		29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebView.swift; sourceTree = "<group>"; };
+		29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScriptMessageHandlerModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 		29C109832BA4C45500F88BBD /* Package */ = {
 			isa = PBXGroup;
 			children = (
+				29FF78772C0CD97B0080E353 /* Modifiers */,
 				29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */,
 				29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */,
 				29C109812BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift */,
@@ -253,6 +256,14 @@
 				290FFE052BC1C56400A695F4 /* Representables */,
 			);
 			path = Toolbar;
+			sourceTree = "<group>";
+		};
+		29FF78772C0CD97B0080E353 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +345,7 @@
 				290EEF312C0CC28700DB2809 /* WebViewModelContainer.swift in Sources */,
 				29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */,
 				29CF6F662BAA156800C4E482 /* WindowProperties.swift in Sources */,
+				29FF78792C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift in Sources */,
 				29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */,
 				290EEF352C0CC35800DB2809 /* WindowView.swift in Sources */,
 				29C109822BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift in Sources */,
