@@ -94,6 +94,7 @@
 		290EEF322C0CC2B600DB2809 /* ViewExample */ = {
 			isa = PBXGroup;
 			children = (
+				29A079DA2BA49C79006B9A80 /* WebViewContainer.swift */,
 			);
 			path = ViewExample;
 			sourceTree = "<group>";
@@ -127,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				290FFE012BC1BC1300A695F4 /* BrowserView.swift */,
-				29A079DA2BA49C79006B9A80 /* WebViewContainer.swift */,
 				290EEF322C0CC2B600DB2809 /* ViewExample */,
 				290EEF2D2C0CC21E00DB2809 /* ViewModelExample */,
 				290EEF362C0CC5A600DB2809 /* Helpers */,
