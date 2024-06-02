@@ -1,4 +1,9 @@
-# ObservableWebView
+<picture>
+  <source media="(prefers-color-scheme: dark)" width="400" alt="ObservableWebView" srcset="https://github.com/buzsh/ObservableWebView/assets/158503966/5b8c74ec-d091-48a9-bdcb-a39b5af5c155">
+  <source media="(prefers-color-scheme: light)" width="400" alt="ObservableWebView" srcset="https://github.com/buzsh/ObservableWebView/assets/158503966/bfc92866-8a80-41a1-aaf2-85e0217d503b">
+  <img width="400" alt="ObservableWebView" src="https://github.com/buzsh/ObservableWebView/assets/158503966/bfc92866-8a80-41a1-aaf2-85e0217d503b">
+</picture>
+
 WKWebView implementation using Swift's [Observation framework](https://developer.apple.com/documentation/observation).
 
 ```swift
