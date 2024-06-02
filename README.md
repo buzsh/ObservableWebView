@@ -1,5 +1,39 @@
 # ObservableWebView
-WKWebView implementation using Swift's new [Observation framework](https://developer.apple.com/documentation/observation).
+WKWebView implementation using Swift's [Observation framework](https://developer.apple.com/documentation/observation).
+
+```swift
+let manager: ObservableWebViewManager
+
+ObservableWebView(manager: manager)
+  .onChange(of: manager.urlString) { ... }
+```
+
+### Built-in state management
+
+```swift
+ObservableWebView(manager: manager)
+  .onChange(of: manager.progress) {
+    updateLoadingBar(withProgress: manager.progress)
+  }
+  
+  .onChange(of: manager.loadState) {
+    switch manager.loadState {
+    case .isLoading:
+      showLoadingBar = true
+    case .isFinished:
+      showLoadingBar = false
+    }
+  }
+```
+
+### JavaScript-friendly
+
+```swift
+ObservableWebView(manager: manager)
+  .scriptMessageHandler("messageFromJS", manager: manager) { message in
+    print("Message: \(message.body)")
+  }
+```
 
 <p align="center">
   <img width="1155" alt="Screenshot 2024-04-06 at 12 24 31 PM" src="https://github.com/buzsh/ObservableWebView/assets/158503966/b595c8d6-14be-4b48-8369-e18323b89c67">
