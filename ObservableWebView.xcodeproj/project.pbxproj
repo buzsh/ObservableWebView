@@ -12,6 +12,7 @@
 		290EEF352C0CC35800DB2809 /* WindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF342C0CC35800DB2809 /* WindowView.swift */; };
 		290EEF382C0CC5BB00DB2809 /* BottomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF372C0CC5BB00DB2809 /* BottomNavigationView.swift */; };
 		290EEF3B2C0CCA9500DB2809 /* ThemeColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF3A2C0CCA9500DB2809 /* ThemeColorModifier.swift */; };
+		290EEF3D2C0CD58B00DB2809 /* AnimateToolbarBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF3C2C0CD58B00DB2809 /* AnimateToolbarBackgroundColor.swift */; };
 		290FFE022BC1BC1300A695F4 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE012BC1BC1300A695F4 /* BrowserView.swift */; };
 		290FFE072BC1C57B00A695F4 /* KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE062BC1C57B00A695F4 /* KeyWindow.swift */; };
 		290FFE092BC1C59100A695F4 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE082BC1C59100A695F4 /* ViewExtension.swift */; };
@@ -42,6 +43,7 @@
 		290EEF342C0CC35800DB2809 /* WindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowView.swift; sourceTree = "<group>"; };
 		290EEF372C0CC5BB00DB2809 /* BottomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationView.swift; sourceTree = "<group>"; };
 		290EEF3A2C0CCA9500DB2809 /* ThemeColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorModifier.swift; sourceTree = "<group>"; };
+		290EEF3C2C0CD58B00DB2809 /* AnimateToolbarBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimateToolbarBackgroundColor.swift; sourceTree = "<group>"; };
 		290FFE012BC1BC1300A695F4 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		290FFE062BC1C57B00A695F4 /* KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyWindow.swift; sourceTree = "<group>"; };
 		290FFE082BC1C59100A695F4 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				290EEF3A2C0CCA9500DB2809 /* ThemeColorModifier.swift */,
+				290EEF3C2C0CD58B00DB2809 /* AnimateToolbarBackgroundColor.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				290FFE022BC1BC1300A695F4 /* BrowserView.swift in Sources */,
 				290EEF3B2C0CCA9500DB2809 /* ThemeColorModifier.swift in Sources */,
 				2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */,
+				290EEF3D2C0CD58B00DB2809 /* AnimateToolbarBackgroundColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

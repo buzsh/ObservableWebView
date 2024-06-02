@@ -10,10 +10,10 @@ import SwiftUI
 struct BrowserView: View {
   @State private var manager = ObservableWebViewManager()
   @State private var themeColor: Color = .clear
-  @State private var toolbarBackground: Color = .clear
   
   init() {
-    manager.load("https://duckduckgo.com")
+    manager.load("https://demo-ai-reminders.vercel.app/")
+    webViewConfig()
   }
   
   var body: some View {
@@ -22,9 +22,12 @@ struct BrowserView: View {
       .toolbar(id: ToolbarIdentifier.editingtools.id) {
         CustomizableBrowserToolbar(manager: manager, themeColor: themeColor)
       }
-      .toolbarBackground(toolbarBackground, for: .windowToolbar)
-      .animateOnChange(of: themeColor, with: $toolbarBackground)
       .themeColor(manager: manager, themeColor: $themeColor)
+      .animateToolbarBackground(color: $themeColor)
+  }
+  
+  func webViewConfig() {
+    manager.webView.allowsBackForwardNavigationGestures = true
   }
 }
 

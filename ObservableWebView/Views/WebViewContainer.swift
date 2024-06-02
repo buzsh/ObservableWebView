@@ -15,13 +15,9 @@ struct WebViewContainer: View {
     VStack {
       ObservableWebView(manager: manager)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-          manager.webView.allowsBackForwardNavigationGestures = true
-        }
         .onChange(of: manager.urlString) {
           observedUrlChange()
         }
-      
       BottomNavigationView(manager: manager)
     }
   }
