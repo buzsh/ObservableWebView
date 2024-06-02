@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		290FFE022BC1BC1300A695F4 /* BrowserTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE012BC1BC1300A695F4 /* BrowserTabView.swift */; };
+		290EEF2F2C0CC23500DB2809 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF2E2C0CC23500DB2809 /* WebViewModel.swift */; };
+		290EEF312C0CC28700DB2809 /* WebViewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF302C0CC28700DB2809 /* WebViewModelContainer.swift */; };
+		290EEF352C0CC35800DB2809 /* WindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF342C0CC35800DB2809 /* WindowView.swift */; };
+		290EEF382C0CC5BB00DB2809 /* BottomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF372C0CC5BB00DB2809 /* BottomNavigationView.swift */; };
+		290EEF3B2C0CCA9500DB2809 /* ThemeColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290EEF3A2C0CCA9500DB2809 /* ThemeColorModifier.swift */; };
+		290FFE022BC1BC1300A695F4 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE012BC1BC1300A695F4 /* BrowserView.swift */; };
 		290FFE072BC1C57B00A695F4 /* KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE062BC1C57B00A695F4 /* KeyWindow.swift */; };
 		290FFE092BC1C59100A695F4 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FFE082BC1C59100A695F4 /* ViewExtension.swift */; };
 		2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */; };
@@ -18,7 +23,6 @@
 		29A079DB2BA49C79006B9A80 /* WebViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A079DA2BA49C79006B9A80 /* WebViewContainer.swift */; };
 		29A079DD2BA49C7A006B9A80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A079DC2BA49C7A006B9A80 /* Assets.xcassets */; };
 		29A079E02BA49C7A006B9A80 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A079DF2BA49C7A006B9A80 /* Preview Assets.xcassets */; };
-		29A448862BAA7E3800858472 /* ObservableFaviconService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A448852BAA7E3800858472 /* ObservableFaviconService.swift */; };
 		29C109822BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C109812BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift */; };
 		29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */; };
 		29C1098B2BA4E4BA00F88BBD /* PlatformColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1098A2BA4E4BA00F88BBD /* PlatformColor.swift */; };
@@ -33,7 +37,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		290FFE012BC1BC1300A695F4 /* BrowserTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserTabView.swift; sourceTree = "<group>"; };
+		290EEF2E2C0CC23500DB2809 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
+		290EEF302C0CC28700DB2809 /* WebViewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModelContainer.swift; sourceTree = "<group>"; };
+		290EEF342C0CC35800DB2809 /* WindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowView.swift; sourceTree = "<group>"; };
+		290EEF372C0CC5BB00DB2809 /* BottomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigationView.swift; sourceTree = "<group>"; };
+		290EEF3A2C0CCA9500DB2809 /* ThemeColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorModifier.swift; sourceTree = "<group>"; };
+		290FFE012BC1BC1300A695F4 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		290FFE062BC1C57B00A695F4 /* KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyWindow.swift; sourceTree = "<group>"; };
 		290FFE082BC1C59100A695F4 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		2934D9B52BB5DCF1003BFF66 /* ProgressViewStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewStyles.swift; sourceTree = "<group>"; };
@@ -46,7 +55,6 @@
 		29A079DC2BA49C7A006B9A80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29A079DF2BA49C7A006B9A80 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		29A079E12BA49C7A006B9A80 /* ObservableWebView.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ObservableWebView.entitlements; sourceTree = "<group>"; };
-		29A448852BAA7E3800858472 /* ObservableFaviconService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableFaviconService.swift; sourceTree = "<group>"; };
 		29C109812BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewCoordinator.swift; sourceTree = "<group>"; };
 		29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewLoadState.swift; sourceTree = "<group>"; };
 		29C109872BA4DA6300F88BBD /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -72,6 +80,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		290EEF2D2C0CC21E00DB2809 /* ViewModelExample */ = {
+			isa = PBXGroup;
+			children = (
+				290EEF2E2C0CC23500DB2809 /* WebViewModel.swift */,
+				290EEF302C0CC28700DB2809 /* WebViewModelContainer.swift */,
+			);
+			path = ViewModelExample;
+			sourceTree = "<group>";
+		};
+		290EEF322C0CC2B600DB2809 /* ViewExample */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewExample;
+			sourceTree = "<group>";
+		};
+		290EEF362C0CC5A600DB2809 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				290EEF372C0CC5BB00DB2809 /* BottomNavigationView.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		290EEF392C0CCA7F00DB2809 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				290EEF3A2C0CCA9500DB2809 /* ThemeColorModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		290FFE032BC1C4F900A695F4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,8 +123,12 @@
 		290FFE042BC1C54F00A695F4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				290FFE012BC1BC1300A695F4 /* BrowserTabView.swift */,
+				290FFE012BC1BC1300A695F4 /* BrowserView.swift */,
 				29A079DA2BA49C79006B9A80 /* WebViewContainer.swift */,
+				290EEF322C0CC2B600DB2809 /* ViewExample */,
+				290EEF2D2C0CC21E00DB2809 /* ViewModelExample */,
+				290EEF362C0CC5A600DB2809 /* Helpers */,
+				290EEF392C0CCA7F00DB2809 /* Modifiers */,
 				290FFE032BC1C4F900A695F4 /* Extensions */,
 			);
 			path = Views;
@@ -132,6 +176,7 @@
 			children = (
 				29A079D82BA49C79006B9A80 /* ObservableWebViewApp.swift */,
 				29CF6F652BAA156800C4E482 /* WindowProperties.swift */,
+				290EEF342C0CC35800DB2809 /* WindowView.swift */,
 				290FFE042BC1C54F00A695F4 /* Views */,
 				29CF6F602BAA13BE00C4E482 /* Toolbar */,
 				29C109892BA4E4A600F88BBD /* Plugins */,
@@ -151,18 +196,9 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		29A448842BAA600800858472 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				29A448852BAA7E3800858472 /* ObservableFaviconService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		29C109832BA4C45500F88BBD /* Package */ = {
 			isa = PBXGroup;
 			children = (
-				29A448842BAA600800858472 /* Services */,
 				29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */,
 				29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */,
 				29C109812BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift */,
@@ -244,7 +280,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					29A079D42BA49C79006B9A80 = {
 						CreatedOnToolsVersion = 15.3;
@@ -291,21 +327,25 @@
 				29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */,
 				2934D9BB2BB61C4B003BFF66 /* UrlBarStyleModifier.swift in Sources */,
 				29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */,
-				29A448862BAA7E3800858472 /* ObservableFaviconService.swift in Sources */,
+				290EEF382C0CC5BB00DB2809 /* BottomNavigationView.swift in Sources */,
+				290EEF312C0CC28700DB2809 /* WebViewModelContainer.swift in Sources */,
 				29CF6F5F2BA9FF9000C4E482 /* CustomizableBrowserToolbar.swift in Sources */,
 				29CF6F662BAA156800C4E482 /* WindowProperties.swift in Sources */,
 				29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */,
+				290EEF352C0CC35800DB2809 /* WindowView.swift in Sources */,
 				29C109822BA4B0DD00F88BBD /* ObservableWebViewCoordinator.swift in Sources */,
 				29A079DB2BA49C79006B9A80 /* WebViewContainer.swift in Sources */,
 				29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */,
 				290FFE072BC1C57B00A695F4 /* KeyWindow.swift in Sources */,
 				29C1098B2BA4E4BA00F88BBD /* PlatformColor.swift in Sources */,
+				290EEF2F2C0CC23500DB2809 /* WebViewModel.swift in Sources */,
 				2934D9BD2BB61CBA003BFF66 /* WindowPropertiesExtension.swift in Sources */,
 				2934D9B92BB6110D003BFF66 /* UrlSearchBar.swift in Sources */,
 				29C109912BA4E8CB00F88BBD /* SymbolButtons.swift in Sources */,
 				29CF6F622BAA13E800C4E482 /* UrlSearchBarTextField.swift in Sources */,
 				29A079D92BA49C79006B9A80 /* ObservableWebViewApp.swift in Sources */,
-				290FFE022BC1BC1300A695F4 /* BrowserTabView.swift in Sources */,
+				290FFE022BC1BC1300A695F4 /* BrowserView.swift in Sources */,
+				290EEF3B2C0CCA9500DB2809 /* ThemeColorModifier.swift in Sources */,
 				2934D9B62BB5DCF1003BFF66 /* ProgressViewStyles.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +387,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -410,6 +451,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -440,6 +482,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ObservableWebView/Preview Content\"";
 				DEVELOPMENT_TEAM = 85N3S3DG8M;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -468,6 +511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ObservableWebView/Preview Content\"";
 				DEVELOPMENT_TEAM = 85N3S3DG8M;
 				ENABLE_HARDENED_RUNTIME = YES;

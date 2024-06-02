@@ -10,11 +10,9 @@ import WebKit
 
 struct ObservableWebView: View {
   var manager: ObservableWebViewManager
-  var nonEssentialFeatures: Bool = true
   
   func makeCoordinator() -> ObservableWebViewCoordinator {
     let coordinator = ObservableWebViewCoordinator(self)
-    coordinator.shouldUseNonEssentialFeatures = nonEssentialFeatures
     return coordinator
   }
 }

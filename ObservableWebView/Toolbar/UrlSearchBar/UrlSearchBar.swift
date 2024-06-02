@@ -10,14 +10,18 @@ import SwiftUI
 struct UrlSearchBar: View {
   @Environment(\.windowProperties) private var windowProperties
   let manager: ObservableWebViewManager
+  let themeColor: Color
+  
   @State private var text: String = ""
   @State private var isEditing: Bool = false
   @State private var showTextField: Bool = false
   @State private var progressBarColor: Color = .accentColor
+  @State private var favicon: Image?
   
   func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
     showTextField = false
     text = prettyUrl(from: manager.urlString)
+    //fetchFavicon()
   }
   
   var body: some View {
@@ -36,13 +40,21 @@ struct UrlSearchBar: View {
     .onChange(of: manager.urlString ?? "") { oldUrl, newUrl in
       observedUrlChange(from: oldUrl, to: newUrl)
     }
+    .onChange(of: themeColor) {
+      print("new url search bar theme: \(themeColor)")
+    }
     .onChange(of: showTextField) {
       if showTextField {
         text = manager.urlString ?? ""
       }
     }
-    .onChange(of: manager.themeColor) {
-      progressBarColor = manager.themeColor == .clear ? .accentColor : .primary
+    .onChange(of: themeColor) {
+      progressBarColor = themeColor == .clear ? .accentColor : .primary
+    }
+    .onChange(of: manager.loadState) {
+      if manager.loadState == .isFinished {
+        fetchFavicon()
+      }
     }
     .mask(
       RoundedRectangle(cornerRadius: 8)
@@ -75,7 +87,7 @@ extension UrlSearchBar {
       
       Spacer()
       
-      if let favicon = manager.favicon {
+      if let favicon {
         favicon
           .resizable()
           .frame(width: 18, height: 18)
@@ -87,7 +99,7 @@ extension UrlSearchBar {
       
       Spacer()
     }
-    .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor)
+    .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: themeColor)
     .foregroundColor(.secondary)
   }
 }
@@ -109,12 +121,109 @@ extension UrlSearchBar {
         }
       }
     }
-    .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: manager.themeColor, isEditing: isEditing)
+    .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: themeColor, isEditing: isEditing)
   }
 }
 
 #Preview {
-  WebViewContainer()
+  BrowserView()
     .frame(width: 400, height: 600)
     .navigationTitle("")
+}
+
+extension UrlSearchBar {
+  private func fetchFavicon() {
+    let faviconService = FaviconService(webView: manager.webView)
+    faviconService.fetchFavicon { image in
+      Task {
+        favicon = image
+      }
+    }
+  }
+}
+
+//
+//  FaviconService.swift
+//  ObservableWebView
+//
+//  Created by Justin Bush on 3/19/24.
+//
+
+import SwiftUI
+import WebKit
+
+class FaviconService {
+  private var webView: WKWebView?
+  
+  init(webView: WKWebView?) {
+    self.webView = webView
+  }
+  
+  func fetchFavicon(completion: @escaping (Image?) -> Void) {
+    let faviconScript = """
+        (function() {
+            var links = document.getElementsByTagName('link');
+            var icons = Array.from(links).filter(function(link) {
+                return link.getAttribute('rel') === 'icon' || link.getAttribute('rel').includes('icon');
+            });
+            return icons.length > 0 ? icons[0].href : '';
+        })();
+        """
+    
+    Task {
+      let result = await executeJavaScript(faviconScript)
+      switch result {
+      case .success(let url):
+        if let urlString = url as? String, let faviconUrl = URL(string: urlString) {
+          let faviconImage = await downloadAndCacheFavicon(from: faviconUrl)
+          await MainActor.run {
+            completion(faviconImage)
+          }
+        } else {
+          await MainActor.run {
+            completion(nil)
+          }
+        }
+      case .failure:
+        await MainActor.run {
+          completion(nil)
+        }
+      }
+    }
+  }
+  
+  @MainActor
+  private func executeJavaScript(_ script: String) async -> Result<Any?, Error> {
+    guard let webView = self.webView else {
+      return .failure(NSError(domain: "WebViewError", code: 0, userInfo: [NSLocalizedDescriptionKey: "WebView is nil"]))
+    }
+    
+    return await withCheckedContinuation { continuation in
+      webView.evaluateJavaScript(script) { result, error in
+        if let error = error {
+          continuation.resume(returning: .failure(error))
+        } else {
+          continuation.resume(returning: .success(result))
+        }
+      }
+    }
+  }
+  
+  private func downloadAndCacheFavicon(from url: URL) async -> Image? {
+    do {
+      let (data, _) = try await URLSession.shared.data(from: url)
+      #if os(iOS)
+      if let uiImage = UIImage(data: data) {
+        return Image(uiImage: uiImage)
+      }
+      #elseif os(macOS)
+      if let nsImage = NSImage(data: data) {
+        return Image(nsImage: nsImage)
+      }
+      #endif
+    } catch {
+      print("Error downloading favicon: \(error)")
+    }
+    return nil
+  }
 }

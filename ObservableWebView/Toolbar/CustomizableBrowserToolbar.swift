@@ -12,8 +12,9 @@ enum ToolbarItemIdentifier: String {
 }
 
 struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
-  let manager: ObservableWebViewManager
   @Environment(\.windowProperties) private var windowProperties
+  let manager: ObservableWebViewManager
+  let themeColor: Color
   
   var body: some CustomizableToolbarContent {
     backButton
@@ -31,7 +32,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   
   var urlSearchBarTextField: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.urlSearchBar.id, placement: .automatic) {
-      UrlSearchBar(manager: manager)
+      UrlSearchBar(manager: manager, themeColor: themeColor)
         .frame(width: windowProperties.urlSearchBarWidth)
     }
     .customizationBehavior(.reorderable)
@@ -109,6 +110,6 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
 }
 
 #Preview {
-  WebViewContainer()
+  BrowserView()
     .frame(width: 400, height: 600)
 }
