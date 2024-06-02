@@ -25,6 +25,9 @@ struct BottomNavigationView: View {
       Button("Theme") {
         manager.load("https://scinfu.github.io/SwiftSoup/")
       }
+      Button("Send Copilot Test") {
+        manager.webView.evaluateJavaScript("sendMessageToCopilot(`i need to walk my dog 3 times today`)")
+      }
       Spacer()
     }
     .padding(.bottom, 8)

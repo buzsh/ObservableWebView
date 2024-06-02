@@ -18,6 +18,9 @@ struct WebViewContainer: View {
         .onChange(of: manager.urlString) {
           observedUrlChange()
         }
+        .scriptMessageHandler("copilotMessageProcessed", manager: manager) { message in
+          print("Message processed: \(message.body)")
+        }
       BottomNavigationView(manager: manager)
     }
   }
