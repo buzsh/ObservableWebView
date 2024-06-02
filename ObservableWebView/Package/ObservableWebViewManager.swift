@@ -23,7 +23,8 @@ class ObservableWebViewManager {
   var canGoForward: Bool = false
   var isSecurePage: Bool = false
   
-  private var scriptMessageHandlers: [String: ScriptMessageHandler] = [:]
+  //private
+  var scriptMessageHandlers: [String: ScriptMessageHandler] = [:]
   
   // MARK: User Settings
   /// Sets `progress = 0` when `loadState` is equal to `.isFinished`
@@ -104,33 +105,4 @@ extension ObservableWebViewManager {
   }
 }
 
-// MARK: ScriptMessageHandlers
-import WebKit
 
-protocol ScriptMessageHandler: AnyObject {
-  func didReceiveScriptMessage(_ message: WKScriptMessage)
-}
-
-extension ObservableWebViewManager {
-  func addScriptMessageHandler(_ handler: ScriptMessageHandler, forName name: String) {
-    webView.configuration.userContentController.add(WebViewScriptMessageProxy(handler: handler), name: name)
-    scriptMessageHandlers[name] = handler
-  }
-  
-  func removeScriptMessageHandler(forName name: String) {
-    webView.configuration.userContentController.removeScriptMessageHandler(forName: name)
-    scriptMessageHandlers.removeValue(forKey: name)
-  }
-}
-
-private class WebViewScriptMessageProxy: NSObject, WKScriptMessageHandler {
-  weak var handler: ScriptMessageHandler?
-  
-  init(handler: ScriptMessageHandler) {
-    self.handler = handler
-  }
-  
-  func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-    handler?.didReceiveScriptMessage(message)
-  }
-}
