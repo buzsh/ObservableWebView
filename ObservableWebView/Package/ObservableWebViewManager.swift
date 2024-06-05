@@ -22,13 +22,10 @@ class ObservableWebViewManager {
   var canGoBack: Bool = false
   var canGoForward: Bool = false
   var isSecurePage: Bool = false
-  // Non-Essential
-  var favicon: Image? = nil
-  var themeColor: Color = .clear
+  
+  private var scriptMessageHandlers: [String: ScriptMessageHandler] = [:]
   
   // MARK: User Settings
-  /// When set to true, ObservableWebView will provide non-essential browsing features such as web page theme color, favicon image, etc.
-  var shouldUseNonEssentialFeatures: Bool = true
   /// Sets `progress = 0` when `loadState` is equal to `.isFinished`
   var resetProgressOnPageLoad: Bool = true
   
@@ -79,7 +76,6 @@ extension ObservableWebViewManager {
   }
 }
 
-
 extension ObservableWebViewManager {
   func updateProgress(_ value: Double) {
     progress = value
@@ -97,12 +93,34 @@ extension ObservableWebViewManager {
 }
 
 extension ObservableWebViewManager {
-  private struct Delay {
-    /// Perform an action after a set amount of seconds.
-    static func by(_ seconds: Double, closure: @escaping () -> Void) {
-      Timer.scheduledTimer(withTimeInterval: seconds, repeats: false) { _ in
-        closure()
-      }
-    }
+  func js(_ javaScriptCode: String) {
+    webView.evaluateJavaScript(javaScriptCode)
+  }
+  func js(_ javaScriptCode: String, completionHandler: ((Any?, Error?) -> Void)? = nil) {
+    webView.evaluateJavaScript(javaScriptCode, completionHandler: completionHandler)
+  }
+}
+
+extension ObservableWebViewManager {
+  func addScriptMessageHandler(_ handler: ScriptMessageHandler, forName name: String) {
+    webView.configuration.userContentController.add(ObservableWebViewScriptMessageProxy(handler: handler), name: name)
+    scriptMessageHandlers[name] = handler
+  }
+  
+  func removeScriptMessageHandler(forName name: String) {
+    webView.configuration.userContentController.removeScriptMessageHandler(forName: name)
+    scriptMessageHandlers.removeValue(forKey: name)
+  }
+}
+
+private class ObservableWebViewScriptMessageProxy: NSObject, WKScriptMessageHandler {
+  weak var handler: ScriptMessageHandler?
+  
+  init(handler: ScriptMessageHandler) {
+    self.handler = handler
+  }
+  
+  func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    handler?.didReceiveScriptMessage(message)
   }
 }

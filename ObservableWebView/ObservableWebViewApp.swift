@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct ObservableWebViewApp: App {
+  @Environment(\.windowProperties) private var windowProperties
+  
   var body: some Scene {
     WindowGroup {
-      BrowserTabView()
-        .environment(WindowProperties())
+      WindowView()
+        .environment(windowProperties)
     }
     .windowStyle(.hiddenTitleBar)
     .windowToolbarStyle(.unified(showsTitle: false))

@@ -10,7 +10,6 @@ import WebKit
 
 class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   var observableWebView: ObservableWebView
-  var shouldUseNonEssentialFeatures: Bool = true
   
   private var urlObservation: NSKeyValueObservation?
   private var pageTitleObservation: NSKeyValueObservation?
@@ -22,8 +21,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   init(_ webView: ObservableWebView) {
     self.observableWebView = webView
     super.init()
-    setupEssentialWebKitObservations()
-    setupNonEssentialWebKitObservations()
+    setupWebKitObservers()
   }
   
   deinit {
@@ -36,43 +34,20 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     observableWebView.manager.loadState = .isLoading
-    observableWebView.manager.favicon = nil
   }
   
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
     // webview is beginning to receive and display content
-    Task { await updateWebViewContentThemeColor(canSetClearColor: false) }
+   
   }
   
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     observableWebView.manager.loadState = .isFinished
     observableWebView.manager.updateUrlString(withUrl: webView.url)
-    
-    if observableWebView.manager.shouldUseNonEssentialFeatures {
-      Task { await updateWebViewContentThemeColor() }
-      fetchFavicon()
-    }
   }
   
   func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
     observableWebView.manager.loadState = .error(error)
-  }
-  
-  /// Provides the option for `canSetClearColor` so that the color does not get cleared on didCommit calls.
-  @MainActor
-  private func updateWebViewContentThemeColor(canSetClearColor: Bool = true) async {
-    let themeColorScript = "document.querySelector('meta[name=\\\"theme-color\\\"]').getAttribute('content');"
-    
-    do {
-      if let themeColorString = try await observableWebView.manager.webView.evaluateJavaScript(themeColorScript) as? String,
-         let themeColor = PlatformColor(hex: themeColorString) {
-        observableWebView.manager.themeColor = Color(themeColor)
-      }
-    } catch {
-      if canSetClearColor {
-        observableWebView.manager.themeColor = Color.clear
-      }
-    }
   }
   
   @MainActor
@@ -88,7 +63,7 @@ class ObservableWebViewCoordinator: NSObject, WKNavigationDelegate {
 
 // MARK: Essential WebKit Observers
 extension ObservableWebViewCoordinator {
-  private func setupEssentialWebKitObservations() {
+  private func setupWebKitObservers() {
     setupNavigationObservations()
     setupProgressObservation()
   }
@@ -123,23 +98,6 @@ extension ObservableWebViewCoordinator {
     
     hasOnlySecureContentObservation = observableWebView.manager.webView.observe(\.hasOnlySecureContent, options: .new) { [weak self] webView, _ in
       self?.observableWebView.manager.isSecurePage = webView.hasOnlySecureContent
-    }
-  }
-}
-  
-// MARK: Non-Essential WebKit Observers
-extension ObservableWebViewCoordinator {
-  private func setupNonEssentialWebKitObservations() {
-    
-  }
-}
-  
-extension ObservableWebViewCoordinator {
-  private func fetchFavicon() {
-    let faviconService = ObservableFaviconService(webView: observableWebView.manager.webView)
-    
-    faviconService.fetchFavicon { [weak self] image in
-      self?.observableWebView.manager.favicon = image
     }
   }
 }

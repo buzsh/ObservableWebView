@@ -1,5 +1,5 @@
 //
-//  ObservableFaviconService.swift
+//  FaviconService.swift
 //  ObservableWebView
 //
 //  Created by Justin Bush on 3/19/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import WebKit
 
-class ObservableFaviconService {
+class FaviconService {
   private var webView: WKWebView?
   
   init(webView: WKWebView?) {

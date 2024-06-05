@@ -10,12 +10,14 @@ import WebKit
 
 struct ObservableWebView: View {
   var manager: ObservableWebViewManager
-  var nonEssentialFeatures: Bool = true
   
   func makeCoordinator() -> ObservableWebViewCoordinator {
     let coordinator = ObservableWebViewCoordinator(self)
-    coordinator.shouldUseNonEssentialFeatures = nonEssentialFeatures
     return coordinator
+  }
+  
+  func scriptMessageHandler(_ name: String, handler: @escaping (WKScriptMessage) -> Void) -> some View {
+    self.modifier(ObservableScriptMessageHandlerModifier(name: name, handler: handler, manager: manager))
   }
 }
 
