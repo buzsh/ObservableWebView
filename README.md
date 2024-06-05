@@ -8,36 +8,68 @@ WKWebView implementation using Swift's [Observation framework](https://developer
 
 ```swift
 let manager: ObservableWebViewManager
+```
 
+## Observable States
+
+```swift
 ObservableWebView(manager: manager)
   .onChange(of: manager.urlString) { ... }
 ```
-
-### Built-in state management
 
 ```swift
 ObservableWebView(manager: manager)
   .onChange(of: manager.progress) {
     updateLoadingBar(withProgress: manager.progress)
   }
-  
+```
+
+### Load States
+
+```swift
+ObservableWebView(manager: manager)
   .onChange(of: manager.loadState) {
-    switch manager.loadState {
-    case .isLoading:
-      showLoadingBar = true
-    case .isFinished:
-      showLoadingBar = false
-    }
+    switch state {
+      case .idle:
+        print("WebView is idle.")
+      case .isLoading:
+        print("WebView is loading.")
+      case .isFinished:
+        print("WebView has finished loading.")
+      case .error(let error):
+        print("WebView encountered an error: \(error.localizedDescription)")
+      }
   }
 ```
 
-### JavaScript-friendly
+
+## JavaScript-friendly
+
+### Script Message Handlers
 
 ```swift
 ObservableWebView(manager: manager)
   .scriptMessageHandler("messageFromJS", manager: manager) { message in
     print("Message: \(message.body)")
   }
+```
+
+### Execution
+
+```swift
+manager.js("document.title")
+```
+
+With completion:
+
+```swift
+manager.js("document.title") { result, error in
+  if let error = error {
+    print("JavaScript execution failed: \(error)")
+  } else if let result = result {
+    print("JavaScript execution result: \(result)")
+  }
+}
 ```
 
 <p align="center">
