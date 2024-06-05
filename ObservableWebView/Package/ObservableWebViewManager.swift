@@ -76,7 +76,6 @@ extension ObservableWebViewManager {
   }
 }
 
-
 extension ObservableWebViewManager {
   func updateProgress(_ value: Double) {
     progress = value
