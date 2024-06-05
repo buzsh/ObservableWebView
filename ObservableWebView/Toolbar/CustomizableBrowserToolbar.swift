@@ -69,7 +69,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   @State private var canBookmark = false
   var bookmarkButton: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.bookmarkButton.id, placement: .automatic) {
-      ToolbarSymbolButton(title: "Bookmark", symbol: .star, action: { print("BOOKMARK") })
+      ToolbarSymbolButton(title: "Bookmark", symbol: .star, action: { print("TODO: BOOKMARK") })
         .disabled(!canBookmark)
         .animateOnChange(of: manager.urlString != nil, with: $canBookmark)
     }
@@ -78,7 +78,7 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
   @State private var canShare = false
   var shareButton: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.shareButton.id, placement: .automatic) {
-      ToolbarSymbolButton(title: "Share", symbol: .share, action: { print("SHARE") })
+      ToolbarSymbolButton(title: "Share", symbol: .share, action: { print("TODO: SHARE") })
         .disabled(!canShare)
         .animateOnChange(of: manager.urlString != nil, with: $canShare)
     }

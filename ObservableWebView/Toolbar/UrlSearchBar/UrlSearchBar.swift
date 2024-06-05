@@ -113,12 +113,26 @@ extension UrlSearchBar {
       UrlSearchBarTextField(text: $text, isEditing: $isEditing) {
         if text.isEmpty {
           showTextField = false
-        } else {
+        } else if isValidUrl(text) {
           manager.load(text)
+        } else {
+          loadSearch(query: text)
         }
       }
     }
     .urlBarStyle(width: windowProperties.urlSearchBarWidth, themeColor: themeColor, isEditing: isEditing)
+  }
+  
+  func isValidUrl(_ urlString: String) -> Bool {
+    let urlRegEx = "((?:http|https|file)://)?((?:localhost)|(?:\\w+\\.\\w+))(?::\\d+)?(?:/[^\\s]*)?"
+    let predicate = NSPredicate(format:"SELF MATCHES %@", urlRegEx)
+    return predicate.evaluate(with: urlString)
+  }
+  
+  func loadSearch(query: String) {
+    let searchQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    let searchURL = "https://duckduckgo.com/?q=\(searchQuery)"
+    manager.load(searchURL)
   }
 }
 
