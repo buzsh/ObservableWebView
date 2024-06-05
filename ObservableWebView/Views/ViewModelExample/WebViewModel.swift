@@ -20,5 +20,4 @@ class WebViewModel {
   func webViewConfig() {
     manager.webView.allowsBackForwardNavigationGestures = true
   }
-  
 }

@@ -30,11 +30,9 @@ struct WebViewContainer: View {
     guard let urlString = manager.urlString else { return }
     print("manager.urlString: \(urlString)")
   }
-  
 }
 
 #Preview {
   BrowserView()
     .frame(width: 400, height: 600)
 }
-

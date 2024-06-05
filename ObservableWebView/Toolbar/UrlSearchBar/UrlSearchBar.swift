@@ -21,7 +21,6 @@ struct UrlSearchBar: View {
   func observedUrlChange(from oldUrlString: String, to newUrlString: String) {
     showTextField = false
     text = prettyUrl(from: manager.urlString)
-    //fetchFavicon()
   }
   
   var body: some View {
