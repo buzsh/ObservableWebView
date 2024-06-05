@@ -56,12 +56,10 @@ struct CustomizableBrowserToolbar: ToolbarContent, CustomizableToolbarContent {
     }
   }
   
-  @State private var canReload = false
   var refreshButton: some CustomizableToolbarContent {
     ToolbarItem(id: ToolbarItemIdentifier.refreshButton.id, placement: .automatic) {
       ToolbarSymbolButton(title: "Refresh", symbol: .refresh, action: manager.reload)
-        .disabled(!canReload)
-        .animateOnChange(of: manager.urlString != nil, with: $canReload)
+        .disabled(manager.urlString == nil)
         .onLongPressGesture(perform: {
           manager.forceReload()
         })
