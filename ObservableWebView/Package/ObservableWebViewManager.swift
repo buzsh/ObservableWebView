@@ -95,6 +95,15 @@ extension ObservableWebViewManager {
 }
 
 extension ObservableWebViewManager {
+  func js(_ javaScriptCode: String) {
+    webView.evaluateJavaScript(javaScriptCode)
+  }
+  func js(_ javaScriptCode: String, completionHandler: ((Any?, Error?) -> Void)? = nil) {
+    webView.evaluateJavaScript(javaScriptCode, completionHandler: completionHandler)
+  }
+}
+
+extension ObservableWebViewManager {
   func addScriptMessageHandler(_ handler: ScriptMessageHandler, forName name: String) {
     webView.configuration.userContentController.add(ObservableWebViewScriptMessageProxy(handler: handler), name: name)
     scriptMessageHandlers[name] = handler
