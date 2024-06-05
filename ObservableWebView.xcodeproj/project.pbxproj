@@ -33,6 +33,7 @@
 		29CF6F622BAA13E800C4E482 /* UrlSearchBarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */; };
 		29CF6F642BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */; };
 		29CF6F662BAA156800C4E482 /* WindowProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF6F652BAA156800C4E482 /* WindowProperties.swift */; };
+		29E224512C1122E90062B3FA /* FaviconService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E224502C1122E90062B3FA /* FaviconService.swift */; };
 		29EA6FDB2BA49F1300C8AB11 /* ObservableWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */; };
 		29EA6FDD2BA4A03500C8AB11 /* ObservableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */; };
 		29FF78792C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */; };
@@ -69,6 +70,7 @@
 		29CF6F612BAA13E800C4E482 /* UrlSearchBarTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSearchBarTextField.swift; sourceTree = "<group>"; };
 		29CF6F632BAA14C700C4E482 /* CustomizableToolbarIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizableToolbarIdentifiers.swift; sourceTree = "<group>"; };
 		29CF6F652BAA156800C4E482 /* WindowProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowProperties.swift; sourceTree = "<group>"; };
+		29E224502C1122E90062B3FA /* FaviconService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconService.swift; sourceTree = "<group>"; };
 		29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebViewManager.swift; sourceTree = "<group>"; };
 		29EA6FDC2BA4A03500C8AB11 /* ObservableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableWebView.swift; sourceTree = "<group>"; };
 		29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScriptMessageHandlerModifier.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				290FFE042BC1C54F00A695F4 /* Views */,
 				29CF6F602BAA13BE00C4E482 /* Toolbar */,
 				29C109892BA4E4A600F88BBD /* Plugins */,
+				29E2244F2C1122DC0062B3FA /* Services */,
 				29C109832BA4C45500F88BBD /* Package */,
 				29A079DC2BA49C7A006B9A80 /* Assets.xcassets */,
 				29A079E12BA49C7A006B9A80 /* ObservableWebView.entitlements */,
@@ -260,6 +263,14 @@
 				290FFE052BC1C56400A695F4 /* Representables */,
 			);
 			path = Toolbar;
+			sourceTree = "<group>";
+		};
+		29E2244F2C1122DC0062B3FA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				29E224502C1122E90062B3FA /* FaviconService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		29FF78772C0CD97B0080E353 /* Modifiers */ = {
@@ -359,6 +370,7 @@
 				290FFE092BC1C59100A695F4 /* ViewExtension.swift in Sources */,
 				29C1098E2BA4E89B00F88BBD /* SFSymbol.swift in Sources */,
 				2934D9BB2BB61C4B003BFF66 /* UrlBarStyleModifier.swift in Sources */,
+				29E224512C1122E90062B3FA /* FaviconService.swift in Sources */,
 				29C109852BA4C48600F88BBD /* ObservableWebViewLoadState.swift in Sources */,
 				290EEF382C0CC5BB00DB2809 /* BottomNavigationView.swift in Sources */,
 				290EEF312C0CC28700DB2809 /* WebViewModelContainer.swift in Sources */,
