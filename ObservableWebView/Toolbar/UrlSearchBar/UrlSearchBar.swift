@@ -40,9 +40,6 @@ struct UrlSearchBar: View {
     .onChange(of: manager.urlString ?? "") { oldUrl, newUrl in
       observedUrlChange(from: oldUrl, to: newUrl)
     }
-    .onChange(of: themeColor) {
-      print("new url search bar theme: \(themeColor)")
-    }
     .onChange(of: showTextField) {
       if showTextField {
         text = manager.urlString ?? ""
