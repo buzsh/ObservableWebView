@@ -23,8 +23,7 @@ class ObservableWebViewManager {
   var canGoForward: Bool = false
   var isSecurePage: Bool = false
   
-  //private
-  var scriptMessageHandlers: [String: ScriptMessageHandler] = [:]
+  private var scriptMessageHandlers: [String: ScriptMessageHandler] = [:]
   
   // MARK: User Settings
   /// Sets `progress = 0` when `loadState` is equal to `.isFinished`
