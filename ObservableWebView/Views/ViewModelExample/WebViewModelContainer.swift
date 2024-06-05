@@ -17,6 +17,9 @@ struct WebViewModelContainer: View {
         .onChange(of: viewModel.manager.urlString) {
           observedUrlChange()
         }
+        .scriptMessageHandler("someMessageHandler", manager: viewModel.manager) { message in
+          print("someMessageHandler: \(message.body)")
+        }
       
       BottomNavigationView(manager: viewModel.manager)
     }

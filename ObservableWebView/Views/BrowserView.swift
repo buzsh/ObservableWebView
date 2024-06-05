@@ -12,7 +12,7 @@ struct BrowserView: View {
   @State private var themeColor: Color = .clear
   
   init() {
-    manager.load("https://demo-ai-reminders.vercel.app/")
+    manager.load("https://duckduckgo.com")
     webViewConfig()
   }
   
