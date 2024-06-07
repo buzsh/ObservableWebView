@@ -210,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				29FF787B2C0CE23E0080E353 /* Utilities */,
-				29FF787A2C0CE2300080E353 /* Extensions */,
 				29FF78772C0CD97B0080E353 /* Modifiers */,
 				29C109842BA4C48600F88BBD /* ObservableWebViewLoadState.swift */,
 				29EA6FDA2BA49F1300C8AB11 /* ObservableWebViewManager.swift */,
@@ -279,13 +278,6 @@
 				29FF78782C0CD9860080E353 /* ObservableScriptMessageHandlerModifier.swift */,
 			);
 			path = Modifiers;
-			sourceTree = "<group>";
-		};
-		29FF787A2C0CE2300080E353 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		29FF787B2C0CE23E0080E353 /* Utilities */ = {

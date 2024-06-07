@@ -20,6 +20,7 @@ struct ObservableScriptMessageHandlerModifier: ViewModifier {
   func body(content: Content) -> some View {
     content
       .onAppear {
+        manager.removeScriptMessageHandler(forName: name)
         manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: handler), forName: name)
       }
       .onDisappear {
