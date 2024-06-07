@@ -23,9 +23,6 @@ struct ObservableScriptMessageHandlerModifier: ViewModifier {
         manager.removeScriptMessageHandler(forName: name)
         manager.addScriptMessageHandler(ObservableScriptMessageHandler(handler: handler), forName: name)
       }
-      .onDisappear {
-        manager.removeScriptMessageHandler(forName: name)
-      }
   }
 }
 
